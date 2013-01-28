@@ -23,6 +23,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Keypad extends JFrame{
 	final String[] keypadLabels = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"};
 	Map<String, String> keyCodeMap = new HashMap<String, String>();
+	
+	final Color green = new Color(0x42, 0xe7, 0x3a);
+	final Color red = new Color(0xff, 0x11, 0x11);
+	
 	JavaMonkey monkey;
 	JPanel keypadPanel = new JPanel();
 
@@ -178,16 +182,16 @@ public class Keypad extends JFrame{
 		// Create a call button
 		JButton callButton = new JButton("Call");
 		callButton.setFont(numberFont);
+		callButton.setBackground(green);
 		
-		
-		callButton.setBackground(new Color(0x42, 0xe7, 0x3a));
 		delButton.setFont(callingFont);
-		delButton.setBackground(new Color(0xff, 0x11, 0x11));
+		delButton.setBackground(red);
+		
 		callingPanel.add(callButton);
 		keypadPanel.add(callingPanel);
 		callingPanel.setLayout(new GridLayout(1,0));
 		
-		// Create a calling Label
+		// Create a calling Label to display when a call is initiated
 		final JLabel callingLabel = new JLabel();
 		callingLabel.setFont(callingFont);
 		callingPanel.add(callingLabel);
@@ -195,12 +199,24 @@ public class Keypad extends JFrame{
 				
 		// Create a listener for the callButton
 		callButton.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent event) {
-				String number = numberField.getText();
-				numberField.setText("");
-				callingLabel.setText("    Calling " + number + " . . .");
-				monkey.press(keyCodeMap.get("Call"));
-								
+				JButton callButton = (JButton) event.getSource();
+				
+				if(callButton.getText().equals("Call")) {
+					callButton.setText("End Call");
+					callButton.setBackground(red);
+					String number = numberField.getText();
+					numberField.setText("");
+					callingLabel.setText("    Calling " + number + " . . .");
+					monkey.press("KEYCODE_CALL");	
+				} else {
+					callButton.setText("Call");
+					callButton.setBackground(green);
+					numberField.setText("");
+					callingLabel.setText("");
+					monkey.press("KEYCODE_ENDCALL");
+				}
 			}
 		});
 		
