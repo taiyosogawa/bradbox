@@ -10,29 +10,21 @@ interface Window {
 
 
 public class BradBox{
-	private JavaMonkey monkey;
+	private final JavaMonkey monkey = new JavaMonkey();
+	SerialListener listener = new SerialListener(monkey);
+	private Keypad keypad;
 	
-	
-	BradBox () {
-		// change this later
-		monkey = new JavaMonkey();
-	}
-	
-
 	public void startKeypad() {
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Keypad keypad = new Keypad(monkey);
+                keypad = new Keypad(monkey);
                 keypad.setVisible(true);
             }
 		});
-		
 	}
 
 	public static void main(String[] args) {
 		BradBox bradbox = new BradBox();
 		bradbox.startKeypad();
-		
 	}
-
 }

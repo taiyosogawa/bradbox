@@ -12,8 +12,7 @@ import java.util.Enumeration;
 
 
 public class SerialListener implements SerialPortEventListener {
-	
-    // Members used for Arduino communication
+	JavaMonkey monkey;
     SerialPort serialPort;
     private BufferedReader input;
     private OutputStream output;
@@ -23,6 +22,11 @@ public class SerialListener implements SerialPortEventListener {
     private static final int DATA_RATE = 9600;
     // THIS WILL NEED TO BE CONFIGURED
     private static final String SERIAL_PORT = "COM4";
+    
+    SerialListener(JavaMonkey m) {
+    	monkey = m;
+    	initialize();
+    }
     
     
     public void initialize () {
@@ -85,7 +89,11 @@ public class SerialListener implements SerialPortEventListener {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				String inputLine=input.readLine();
-				System.out.println(inputLine);
+				if(inputLine.equals("1")){
+					System.out.println("Button pressed!");
+					monkey.press("KEYCODE_CALL");
+				}
+				
 			} catch (Exception e) {
 				System.err.println(e.toString());
 			}
@@ -94,10 +102,10 @@ public class SerialListener implements SerialPortEventListener {
 	}
 
 	/**
-	 * @param args
-	 */
+	 * param args
+	 
 	public static void main(String[] args) throws Exception {
-		SerialListener main = new SerialListener();
+		SerialListener main = new SerialListener(new JavaMonkey());
 		main.initialize();
 		Thread t=new Thread() {
 			public void run() {
@@ -110,5 +118,6 @@ public class SerialListener implements SerialPortEventListener {
 		System.out.println("Started");
 
 	}
+	*/
 
 }
