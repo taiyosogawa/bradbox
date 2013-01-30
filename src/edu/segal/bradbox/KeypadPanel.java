@@ -1,6 +1,5 @@
 package edu.segal.bradbox;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,6 +18,8 @@ public class KeypadPanel extends JPanel{
 	JavaMonkey monkey;
 	final static private String[] keypadLabels = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"};
 	final static private Map<String, String> keyCodeMap = new HashMap<String, String>();
+	final private JTextField numberField = new JTextField(12);
+	final private JLabel callingLabel = new JLabel();
 	
 	/**
 	 *  Required for a JPanel
@@ -73,7 +74,6 @@ public class KeypadPanel extends JPanel{
 		
 		// Add a text field to the panel
 		JPanel numberFieldPanel = new JPanel();
-		final JTextField numberField = new JTextField(12);
 		numberFieldPanel.add(numberField);
 		
 		// Customize the text field font
@@ -137,7 +137,6 @@ public class KeypadPanel extends JPanel{
 		callingPanel.setLayout(new GridLayout(1,0));
 		
 		// Create a calling Label to display when a call is initiated
-		final JLabel callingLabel = new JLabel();
 		callingLabel.setFont(callingFont);
 		callingPanel.add(callingLabel);
 				
@@ -147,24 +146,30 @@ public class KeypadPanel extends JPanel{
 			
 			public void actionPerformed(ActionEvent event) {
 				JButton callButton = (JButton) event.getSource();
-				
 				if(callButton.getText().equals("Call")) {
-					callButton.setText("End Call");
-					callButton.setBackground(Constants.RED);
-					String number = numberField.getText();
-					numberField.setText("");
-					callingLabel.setText("    Calling " + number + " . . .");
-					monkey.press("KEYCODE_CALL");	
+					initiateCall(callButton);
 				} else {
-					callButton.setText("Call");
-					callButton.setBackground(Constants.GREEN);
-					numberField.setText("");
-					callingLabel.setText("");
-					monkey.press("KEYCODE_ENDCALL");
+					endCall(callButton);
 				}
 			}
 		});
-		
+	}
+	
+	public void initiateCall(JButton callButton) {
+		callButton.setText("End Call");
+		callButton.setBackground(Constants.RED);
+		String number = numberField.getText();
+		numberField.setText("");
+		callingLabel.setText("    Calling " + number + " . . .");
+		monkey.press("KEYCODE_CALL");	
+	}
+	
+	public void endCall(JButton callButton) {
+		callButton.setText("Call");
+		callButton.setBackground(Constants.GREEN);
+		numberField.setText("");
+		callingLabel.setText("");
+		monkey.press("KEYCODE_ENDCALL");
 	}
 
 }
