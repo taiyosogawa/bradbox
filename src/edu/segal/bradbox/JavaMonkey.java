@@ -38,7 +38,7 @@ public class JavaMonkey {
      */
     public void press(String keycode) {
 	    if ( mDevice == null ) {
-            throw new IllegalStateException("init() must be called first.");
+            throw new IllegalStateException("JavaMonkey is not initialized in JavaMonkey.");
 	    }
 	    
 	    mDevice.press(keycode, TouchPressType.DOWN_AND_UP);  
