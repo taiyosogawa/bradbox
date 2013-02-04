@@ -30,7 +30,7 @@ public class SuperFrame extends JFrame{
 	public SuperFrame(JavaMonkey m) {
 		initJavaMonkey(m);
 		keypadPanel = new KeypadPanel(monkey);
-		contactsPanel = new ContactsPanel();
+		contactsPanel = new ContactsPanel(monkey);
 	    initWindow();
 		initMenu();
 

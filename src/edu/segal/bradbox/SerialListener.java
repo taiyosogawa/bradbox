@@ -94,9 +94,7 @@ public class SerialListener implements SerialPortEventListener {
 				
 				if(inputLine.equals("short")){
 					System.out.println("Answering Call");
-					monkey.shell("am broadcast -a edu.segal.androidbradbox.smsbroadcast -e number '+16305369748' -e message 'Am i bothering you?'");
-					//monkey.shell("am start -a android.intent.action.SENDTO -d sms:5132546751 --es sms_body \"Hey Brian, is this working??\" --ez exit_on_sent true");
-					//monkey.press("am broadcast sendMessage");
+					monkey.press("KEYCODE_CALL");
 					//bradbox.gui.keypadPanel.initiateCall();
 				}
 				
