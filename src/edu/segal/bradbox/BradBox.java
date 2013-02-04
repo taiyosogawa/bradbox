@@ -4,7 +4,7 @@ import javax.swing.SwingUtilities;
 
 public class BradBox{
 	private final JavaMonkey monkey = new JavaMonkey();
-	//SerialListener listener = new SerialListener(monkey);
+	SerialListener listener = new SerialListener(monkey);
 	private SuperFrame keypad;
 	
 	public void startKeypad() {

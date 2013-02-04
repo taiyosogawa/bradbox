@@ -89,15 +89,21 @@ public class SerialListener implements SerialPortEventListener {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				String inputLine=input.readLine();
-				if(inputLine.equals("1")){
-					System.out.println("Button pressed!");
+				
+				if(inputLine.equals("short")){
+					System.out.println("Answering Call");
 					monkey.press("KEYCODE_CALL");
+					//monkey.shell("am start -a android.intent.action.INSERT -t vnd.android.cursor.dir/contact -e name 'Donald Duck' -e phone 555-1234");
+				}
+				
+				if(inputLine.equals("long")){
+					System.out.println("Restarting Device");
+					monkey.shell("reboot");
 				}
 				
 			} catch (Exception e) {
 				System.err.println(e.toString());
 			}
 		}
-		// Ignore all the other eventTypes, but you should consider the other ones.
 	}
 }

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 
 public class KeypadPanel extends JPanel{
 	JavaMonkey monkey;
@@ -70,7 +71,8 @@ public class KeypadPanel extends JPanel{
 	
 	public void initKeypad(){	
 		// Set the orientation of the keypad Panel
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setBorder(new EmptyBorder(0, 0, 0, 0));
 		
 		// Add a text field to the panel
 		JPanel numberFieldPanel = new JPanel();

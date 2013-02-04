@@ -40,8 +40,14 @@ public class JavaMonkey {
 	    if ( mDevice == null ) {
             throw new IllegalStateException("JavaMonkey is not initialized in JavaMonkey.");
 	    }
-	    
 	    mDevice.press(keycode, TouchPressType.DOWN_AND_UP);  
+    }
+    
+    public void shell(String cmd) {
+    	if ( mDevice == null ) {
+            throw new IllegalStateException("JavaMonkey is not initialized in JavaMonkey.");
+	    }
+    	mDevice.shell(cmd);
     }
 
     /**
