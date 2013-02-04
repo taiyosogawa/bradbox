@@ -12,6 +12,7 @@ import java.util.Enumeration;
 
 
 public class SerialListener implements SerialPortEventListener {
+	BradBox bradbox;
 	JavaMonkey monkey;
     SerialPort serialPort;
     private BufferedReader input;
@@ -23,8 +24,9 @@ public class SerialListener implements SerialPortEventListener {
     // THIS WILL NEED TO BE CONFIGURED
     private static final String SERIAL_PORT = "COM4";
     
-    SerialListener(JavaMonkey m) {
-    	monkey = m;
+    SerialListener(BradBox bb) {
+    	bradbox = bb;
+    	monkey = bb.monkey;
     	initialize();
     }
     
@@ -92,8 +94,10 @@ public class SerialListener implements SerialPortEventListener {
 				
 				if(inputLine.equals("short")){
 					System.out.println("Answering Call");
-					monkey.press("KEYCODE_CALL");
-					//monkey.shell("am start -a android.intent.action.INSERT -t vnd.android.cursor.dir/contact -e name 'Donald Duck' -e phone 555-1234");
+					monkey.shell("am broadcast -a edu.segal.androidbradbox.smsbroadcast -e number '+16305369748' -e message 'Am i bothering you?'");
+					//monkey.shell("am start -a android.intent.action.SENDTO -d sms:5132546751 --es sms_body \"Hey Brian, is this working??\" --ez exit_on_sent true");
+					//monkey.press("am broadcast sendMessage");
+					//bradbox.gui.keypadPanel.initiateCall();
 				}
 				
 				if(inputLine.equals("long")){

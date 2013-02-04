@@ -25,7 +25,6 @@ public class JavaMonkey {
 	    options.put("adbLocation", ADB);
 	    mChimpchat = ChimpChat.getInstance(options);
 	    mDevice = mChimpchat.waitForConnection(ADB_TIMEOUT, ".*");
-	    
 	    if ( mDevice == null ) {
             throw new RuntimeException("Couldn't connect.");
 	    } 

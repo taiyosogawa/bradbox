@@ -21,6 +21,7 @@ public class KeypadPanel extends JPanel{
 	final static private Map<String, String> keyCodeMap = new HashMap<String, String>();
 	final private JTextField numberField = new JTextField(12);
 	final private JLabel callingLabel = new JLabel();
+	JButton callButton = new JButton("Call");
 	
 	/**
 	 *  Required for a JPanel
@@ -127,7 +128,6 @@ public class KeypadPanel extends JPanel{
 		Font callingFont = new Font("SansSerif", Font.BOLD, 20);
 		
 		// Create a call button
-		JButton callButton = new JButton("Call");
 		callButton.setFont(numberFont);
 		callButton.setBackground(Constants.GREEN);
 		
@@ -145,11 +145,10 @@ public class KeypadPanel extends JPanel{
 				
 		// Create a listener for the callButton
 		callButton.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent event) {
 				JButton callButton = (JButton) event.getSource();
 				if(callButton.getText().equals("Call")) {
-					initiateCall(callButton);
+					initiateCall();
 				} else {
 					endCall(callButton);
 				}
@@ -157,7 +156,7 @@ public class KeypadPanel extends JPanel{
 		});
 	}
 	
-	public void initiateCall(JButton callButton) {
+	public void initiateCall() {
 		callButton.setText("End Call");
 		callButton.setBackground(Constants.RED);
 		String number = numberField.getText();

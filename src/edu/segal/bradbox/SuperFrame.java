@@ -17,8 +17,8 @@ import javax.swing.border.EmptyBorder;
 
 public class SuperFrame extends JFrame{
 	private JavaMonkey monkey;
-	KeypadPanel keypadPanel;
-	ContactsPanel contactsPanel;
+	public KeypadPanel keypadPanel;
+	public ContactsPanel contactsPanel;
 	JPanel displayedPanel = new JPanel();
 
 	/**
