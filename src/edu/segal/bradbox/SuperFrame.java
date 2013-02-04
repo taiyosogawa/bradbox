@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -75,15 +76,24 @@ public class SuperFrame extends JFrame{
 	private final void initMenu() {
 		JToolBar toolbar = new JToolBar();
 
-		ImageIcon favoritesIcon = new ImageIcon(this.getClass().getResource("../../../img/star_icon.png"));
-		ImageIcon keypadIcon = new ImageIcon(getClass().getResource("../../../img/keypad_icon.png"));
-		ImageIcon contactsIcon = new ImageIcon(getClass().getResource("../../../img/folder_contacts_icon.png"));
-		ImageIcon addIcon = new ImageIcon(getClass().getResource("../../../img/add_icon.png"));
+		ImageIcon favoritesIcon = new ImageIcon(this.getClass().getResource("../../../img/Favorites1.png"));
+		ImageIcon keypadIcon = new ImageIcon(getClass().getResource("../../../img/Keypad1.png"));
+		ImageIcon contactsIcon = new ImageIcon(getClass().getResource("../../../img/Contacts1.png"));
+		ImageIcon addIcon = new ImageIcon(getClass().getResource("../../../img/Add1.png"));
 		
-		JButton favoritesButton = new JButton(favoritesIcon);
-		JButton keypadButton = new JButton(keypadIcon);
-		JButton contactsButton = new JButton(contactsIcon);
-		JButton addButton = new JButton(addIcon);
+		ImageIcon favoritesIcon2 = new ImageIcon(this.getClass().getResource("../../../img/Favorites2.png"));
+		ImageIcon keypadIcon2 = new ImageIcon(getClass().getResource("../../../img/Keypad2.png"));
+		ImageIcon contactsIcon2 = new ImageIcon(getClass().getResource("../../../img/Contacts2.png"));
+		ImageIcon addIcon2 = new ImageIcon(getClass().getResource("../../../img/Add2.png"));
+		
+		JToggleButton favoritesButton = new JToggleButton(favoritesIcon);
+		favoritesButton.setSelectedIcon(favoritesIcon2);
+		JToggleButton keypadButton = new JToggleButton(keypadIcon);
+		keypadButton.setSelectedIcon(keypadIcon2);
+		JToggleButton contactsButton = new JToggleButton(contactsIcon);
+		contactsButton.setSelectedIcon(contactsIcon2);
+		JToggleButton addButton = new JToggleButton(addIcon);
+		addButton.setSelectedIcon(addIcon2);
 		
 		keypadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
