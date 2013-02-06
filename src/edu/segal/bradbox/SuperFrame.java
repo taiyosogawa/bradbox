@@ -63,7 +63,8 @@ public class SuperFrame extends JFrame{
 	private final void initWindow() {
 		 // Initialize the UI look and feel
 		try {
-			UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			//UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
@@ -71,6 +72,7 @@ public class SuperFrame extends JFrame{
 		
 		setTitle("Brad Box");
 		setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
@@ -89,12 +91,16 @@ public class SuperFrame extends JFrame{
 		ImageIcon addIcon2 = new ImageIcon(getClass().getResource("../../../img/Add2.png"));
 		
 		JToggleButton favoritesButton = new JToggleButton(favoritesIcon);
+		favoritesButton.setToolTipText("Favorites");
 		favoritesButton.setSelectedIcon(favoritesIcon2);
 		JToggleButton keypadButton = new JToggleButton(keypadIcon);
+		keypadButton.setToolTipText("Keypad");
 		keypadButton.setSelectedIcon(keypadIcon2);
 		JToggleButton contactsButton = new JToggleButton(contactsIcon);
+		contactsButton.setToolTipText("Contacts");
 		contactsButton.setSelectedIcon(contactsIcon2);
 		JToggleButton addButton = new JToggleButton(addIcon);
+		addButton.setToolTipText("Add Contact");
 		addButton.setSelectedIcon(addIcon2);
 		
 	    ButtonGroup group = new ButtonGroup();
@@ -115,7 +121,7 @@ public class SuperFrame extends JFrame{
 		contactsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				// Place contacts in the viewed area
-				setTitle("contacts");
+				//setTitle("Contacts");
 				keypadPanel.setVisible(false);
 				contactsPanel.setVisible(true);
 			}
