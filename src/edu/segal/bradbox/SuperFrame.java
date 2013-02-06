@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.FlowLayout;
+
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -94,6 +96,12 @@ public class SuperFrame extends JFrame{
 		contactsButton.setSelectedIcon(contactsIcon2);
 		JToggleButton addButton = new JToggleButton(addIcon);
 		addButton.setSelectedIcon(addIcon2);
+		
+	    ButtonGroup group = new ButtonGroup();
+	    group.add(favoritesButton);
+	    group.add(keypadButton);
+	    group.add(contactsButton);
+	    group.add(addButton);
 		
 		keypadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
