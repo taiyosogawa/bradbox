@@ -85,17 +85,17 @@ public class SuperFrame extends JFrame{
 	private final void initMenu() {
 		JToolBar toolbar = new JToolBar();
 
-		ImageIcon favoritesIcon = new ImageIcon(this.getClass().getResource("../../../img/Favorites1.png"));
-		ImageIcon keypadIcon = new ImageIcon(getClass().getResource("../../../img/Keypad1.png"));
-		ImageIcon contactsIcon = new ImageIcon(getClass().getResource("../../../img/Contacts1.png"));
-		ImageIcon addIcon = new ImageIcon(getClass().getResource("../../../img/Add1.png"));
-		ImageIcon textingIcon = new ImageIcon(getClass().getResource("../../../img/Texting1.png"));
+		ImageIcon favoritesIcon = new ImageIcon(this.getClass().getResource("/img/Favorites1.png"));
+		ImageIcon keypadIcon = new ImageIcon(getClass().getResource("/img/Keypad1.png"));
+		ImageIcon contactsIcon = new ImageIcon(getClass().getResource("/img/Contacts1.png"));
+		ImageIcon addIcon = new ImageIcon(getClass().getResource("/img/Add1.png"));
+		ImageIcon textingIcon = new ImageIcon(getClass().getResource("/img/Texting1.png"));
 		
-		ImageIcon favoritesIcon2 = new ImageIcon(this.getClass().getResource("../../../img/Favorites2.png"));
-		ImageIcon keypadIcon2 = new ImageIcon(getClass().getResource("../../../img/Keypad2.png"));
-		ImageIcon contactsIcon2 = new ImageIcon(getClass().getResource("../../../img/Contacts2.png"));
-		ImageIcon addIcon2 = new ImageIcon(getClass().getResource("../../../img/Add2.png"));
-		ImageIcon textingIcon2 = new ImageIcon(getClass().getResource("../../../img/Texting2.png"));
+		ImageIcon favoritesIcon2 = new ImageIcon(this.getClass().getResource("/img/Favorites2.png"));
+		ImageIcon keypadIcon2 = new ImageIcon(getClass().getResource("/img/Keypad2.png"));
+		ImageIcon contactsIcon2 = new ImageIcon(getClass().getResource("/img/Contacts2.png"));
+		ImageIcon addIcon2 = new ImageIcon(getClass().getResource("/img/Add2.png"));
+		ImageIcon textingIcon2 = new ImageIcon(getClass().getResource("/img/Texting2.png"));
 		
 		JToggleButton favoritesButton = new JToggleButton(favoritesIcon);
 		favoritesButton.setToolTipText("Favorites");
