@@ -75,10 +75,10 @@ public class SuperFrame extends JFrame{
 	private final void initMenu() {
 		JToolBar toolbar = new JToolBar();
 
-		ImageIcon favoritesIcon = new ImageIcon(this.getClass().getResource("../../../img/star_icon.png"));
-		ImageIcon keypadIcon = new ImageIcon(getClass().getResource("../../../img/keypad_icon.png"));
-		ImageIcon contactsIcon = new ImageIcon(getClass().getResource("../../../img/folder_contacts_icon.png"));
-		ImageIcon addIcon = new ImageIcon(getClass().getResource("../../../img/add_icon.png"));
+		ImageIcon favoritesIcon = new ImageIcon(this.getClass().getResource("/img/star_icon.png"));
+		ImageIcon keypadIcon = new ImageIcon(getClass().getResource("/img/keypad_icon.png"));
+		ImageIcon contactsIcon = new ImageIcon(getClass().getResource("/img/folder_contacts_icon.png"));
+		ImageIcon addIcon = new ImageIcon(getClass().getResource("/img/add_icon.png"));
 		
 		JButton favoritesButton = new JButton(favoritesIcon);
 		JButton keypadButton = new JButton(keypadIcon);

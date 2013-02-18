@@ -9,7 +9,7 @@ import com.android.chimpchat.core.*;
 
 public class JavaMonkey {
 	// THIS WILL NEED TO BE CONFIGURED
-    private static final String ADB = "/Users/Taiyo/Documents/Workspace/Eclipse/BradBox/platform-tools/adb.exe";
+    private static final String ADB = "/platform-tools/adb.exe";
     private static final long ADB_TIMEOUT = 5000;
     private ChimpChat mChimpchat;
     private IChimpDevice mDevice;
