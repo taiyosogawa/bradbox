@@ -1,5 +1,6 @@
 package edu.segal.bradbox;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,12 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+
 
 public class KeypadPanel extends JPanel{
 	JavaMonkey monkey;
@@ -22,6 +25,7 @@ public class KeypadPanel extends JPanel{
 	final private JTextField numberField = new JTextField(12);
 	final private JLabel callingLabel = new JLabel();
 	JButton callButton = new JButton("Call");
+	//callButton.setPreferredSize(100,100);
 	
 	/**
 	 *  Required for a JPanel
@@ -45,7 +49,8 @@ public class KeypadPanel extends JPanel{
 	
 	private final void initLookandFeel() {
 		try {
-			UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			//UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
@@ -65,7 +70,7 @@ public class KeypadPanel extends JPanel{
 		keyCodeMap.put("9", "KEYCODE_9");
 		keyCodeMap.put("#", "KEYCODE_POUND");
 		keyCodeMap.put("*", "KEYCODE_STAR");
-		keyCodeMap.put("Del", "KEYCODE_DEL");
+		keyCodeMap.put("Delete", "KEYCODE_DEL");
 		keyCodeMap.put("Call", "KEYCODE_CALL");
 		keyCodeMap.put("End Call", "KEYCODE_ENDCALL");
 	}
@@ -78,13 +83,15 @@ public class KeypadPanel extends JPanel{
 		// Add a text field to the panel
 		JPanel numberFieldPanel = new JPanel();
 		numberFieldPanel.add(numberField);
+		//numberFieldPanel.setPreferredSize(new Dimension(1200,900));
 		
 		// Customize the text field font
 		Font numberFont = new Font("SansSerif", Font.BOLD, 40);
 		numberField.setFont(numberFont);
 		
 		// Create backspace button
-				JButton delButton = new JButton("Del");
+				JButton delButton = new JButton("Delete");
+				delButton.setPreferredSize(new Dimension(300,100));
 				numberFieldPanel.add(delButton);
 				
 		// Create a listener for the backspace button
@@ -105,12 +112,13 @@ public class KeypadPanel extends JPanel{
 		JPanel keypad = new JPanel();
 		this.add(keypad);
 		keypad.setLayout(new GridLayout(4,3));
-		keypad.setSize(500, 500);
+		keypad.setPreferredSize(new Dimension(1000,400));
 
 		// Create all buttons with listeners attached
 		for(int i = 0; i < 12; i++){
 			JButton numberKey = new JButton(keypadLabels[i]);
 			numberKey.setFont(numberFont);
+			numberKey.setSize(WIDTH, HEIGHT);
 			numberKey.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					JButton clickedButton = (JButton) event.getSource();
@@ -133,6 +141,7 @@ public class KeypadPanel extends JPanel{
 		
 		delButton.setFont(callingFont);
 		delButton.setBackground(Constants.RED);
+		//delButton.setSize(200,100);
 		
 		callingPanel.add(callButton);
 		this.add(callingPanel);
