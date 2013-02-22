@@ -21,7 +21,9 @@ public class SerialListener implements SerialPortEventListener {
     private static final int SERIAL_TIMEOUT = 2000;
     // Serial baud rate. Do not change this.
     private static final int DATA_RATE = 9600;
-    // THIS WILL NEED TO BE CONFIGURED
+    // THIS WILL NEED TO BE CONFIGURED --- maybe have it send a signal to each COM until it gets a signal back
+    // COM10 for DynaVox (back USB port)
+    // COM4 for LEELA
     private static final String SERIAL_PORT = "COM4";
     
     SerialListener(BradBox bb) {
