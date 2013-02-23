@@ -52,9 +52,9 @@ public class SuperFrame extends JFrame{
 		((FlowLayout)displayedPanel.getLayout()).setVgap(0);
 		((FlowLayout)displayedPanel.getLayout()).setHgap(0);
 
-		keypadPanel.setVisible(false);
 		contactsPanel.setVisible(false);
 		textingPanel.setVisible(false);
+		showKeypad();
 	}
 	
 	private final void initJavaMonkey(JavaMonkey m) {
@@ -81,6 +81,10 @@ public class SuperFrame extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
+	private final void showKeypad() {
+		monkey.shell("am start -a android.intent.action.DIAL");
+		keypadPanel.setVisible(true);
+	}
 
 	private final void initMenu() {
 		JToolBar toolbar = new JToolBar();
@@ -125,8 +129,8 @@ public class SuperFrame extends JFrame{
 				// Place keypad in the viewed area
 				setTitle("Keypad");
 				contactsPanel.setVisible(false);
-				keypadPanel.setVisible(true);
 				textingPanel.setVisible(false);
+				showKeypad();
 
 			}
 		});
