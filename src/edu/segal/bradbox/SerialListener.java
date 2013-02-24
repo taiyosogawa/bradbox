@@ -102,7 +102,7 @@ public class SerialListener implements SerialPortEventListener {
 				
 				if(inputLine.equals("long")){
 					System.out.println("Restarting Device");
-					monkey.shell("reboot");
+					monkey.reboot();
 				}
 				
 			} catch (Exception e) {

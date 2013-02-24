@@ -48,6 +48,12 @@ public class JavaMonkey {
 	    }
     	mDevice.shell(cmd);
     }
+    public void reboot() {
+    	if ( mDevice == null ) {
+            throw new IllegalStateException("JavaMonkey is not initialized in JavaMonkey.");
+	    }
+    	mDevice.reboot(null);
+    }
 
     /**
      * Terminates this JavaMonkey.

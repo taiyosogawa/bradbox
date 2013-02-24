@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.FlowLayout;
-
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +22,7 @@ public class SuperFrame extends JFrame{
 	public KeypadPanel keypadPanel;
 	public ContactsPanel contactsPanel;
 	public TextingPanel textingPanel;
+	public AddContactPanel addContactPanel;
 	JPanel displayedPanel = new JPanel();
 
 	/**
@@ -36,6 +36,7 @@ public class SuperFrame extends JFrame{
 		keypadPanel = new KeypadPanel(monkey);
 		contactsPanel = new ContactsPanel(monkey);
 		textingPanel = new TextingPanel(monkey);
+		addContactPanel = new AddContactPanel(monkey);
 	    initWindow();
 		initMenu();
 
@@ -45,15 +46,13 @@ public class SuperFrame extends JFrame{
 		displayedPanel.add(keypadPanel);
 		displayedPanel.add(contactsPanel);
 		displayedPanel.add(textingPanel);
+		displayedPanel.add(addContactPanel);
 		displayedPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		displayedPanel.setBackground(Constants.GREEN);
-		
-
 		((FlowLayout)displayedPanel.getLayout()).setVgap(0);
 		((FlowLayout)displayedPanel.getLayout()).setHgap(0);
 
-		contactsPanel.setVisible(false);
-		textingPanel.setVisible(false);
+		hidePanels();
 		showKeypad();
 	}
 	
@@ -127,20 +126,17 @@ public class SuperFrame extends JFrame{
 		keypadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				// Place keypad in the viewed area
+				hidePanels();
 				setTitle("Keypad");
-				contactsPanel.setVisible(false);
-				textingPanel.setVisible(false);
 				showKeypad();
-
 			}
 		});
 		
 		textingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				setTitle("Texting");
+				hidePanels();
 				textingPanel.setVisible(true);
-				contactsPanel.setVisible(false);
-				keypadPanel.setVisible(false);
 			}
 		});
 		
@@ -149,9 +145,17 @@ public class SuperFrame extends JFrame{
 			public void actionPerformed(ActionEvent event) {
 				// Place contacts in the viewed area
 				setTitle("Contacts");
-				keypadPanel.setVisible(false);
+				hidePanels();
 				contactsPanel.setVisible(true);
-				textingPanel.setVisible(false);
+			}
+		});
+		
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				// Place contacts in the viewed area
+				setTitle("Add Contact");
+				hidePanels();
+				addContactPanel.setVisible(true);
 			}
 		});
 		
@@ -162,6 +166,13 @@ public class SuperFrame extends JFrame{
 		toolbar.add(textingButton);
 		
 		add(toolbar, BorderLayout.NORTH);
+	}
+	
+	private final void hidePanels() {
+		keypadPanel.setVisible(false);
+		contactsPanel.setVisible(false);
+		textingPanel.setVisible(false);
+		addContactPanel.setVisible(false);
 	}
 	
 }

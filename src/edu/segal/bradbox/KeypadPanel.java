@@ -112,7 +112,7 @@ public class KeypadPanel extends JPanel{
 		JPanel keypad = new JPanel();
 		this.add(keypad);
 		keypad.setLayout(new GridLayout(4,3));
-		keypad.setPreferredSize(new Dimension(1000,400));
+		keypad.setPreferredSize(new Dimension(1000,200));
 
 		// Create all buttons with listeners attached
 		for(int i = 0; i < 12; i++){
