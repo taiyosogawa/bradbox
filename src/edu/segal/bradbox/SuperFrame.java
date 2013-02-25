@@ -1,5 +1,4 @@
 package edu.segal.bradbox;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -139,7 +138,6 @@ public class SuperFrame extends JFrame{
 				textingPanel.setVisible(true);
 			}
 		});
-		
 		
 		contactsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {

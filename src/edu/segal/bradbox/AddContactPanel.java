@@ -14,10 +14,9 @@ import javax.swing.border.EmptyBorder;
 
 public class AddContactPanel extends JPanel {
 	private JavaMonkey monkey;
-	JTextField nameField = new JTextField(12);
-	JTextField numberField = new JTextField(30);
+	JTextField nameField = new JTextField(30);
+	JTextField numberField = new JTextField(12);
 
-	
 	AddContactPanel(JavaMonkey m) {
 		monkey = m;
 		
