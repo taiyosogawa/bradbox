@@ -122,8 +122,8 @@ public class Serialio implements SerialPortEventListener {
 				
 				if(inputLine.equals("short")){
 					System.out.println("Answering Call");
-					monkey.press("KEYCODE_CALL");
-					//bradbox.gui.keypadPanel.initiateCall();
+					//monkey.press("KEYCODE_CALL");
+					bradbox.gui.keypadPanel.acceptButtonPush();
 				}
 				if(inputLine.equals("long")){
 					System.out.println("Restarting Device");

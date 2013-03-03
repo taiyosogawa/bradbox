@@ -21,7 +21,6 @@ public class SuperFrame extends JFrame{
 	public KeypadPanel keypadPanel;
 	public ContactsPanel contactsPanel;
 	public TextingPanel textingPanel;
-	public AddContactPanel addContactPanel;
 	public OptionsPanel optionsPanel;
 	JPanel displayedPanel = new JPanel();
 
@@ -36,8 +35,7 @@ public class SuperFrame extends JFrame{
 		keypadPanel = new KeypadPanel(monkey);
 		contactsPanel = new ContactsPanel(monkey);
 		textingPanel = new TextingPanel(monkey);
-		addContactPanel = new AddContactPanel(monkey);
-		optionsPanel = new OptionsPanel(monkey, s);
+		optionsPanel = new OptionsPanel(this, monkey, s);
 	    initWindow();
 		initMenu();
 
@@ -47,7 +45,6 @@ public class SuperFrame extends JFrame{
 		displayedPanel.add(keypadPanel);
 		displayedPanel.add(contactsPanel);
 		displayedPanel.add(textingPanel);
-		displayedPanel.add(addContactPanel);
 		displayedPanel.add(optionsPanel);
 		displayedPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		displayedPanel.setBackground(Constants.GREEN);
@@ -82,7 +79,9 @@ public class SuperFrame extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	private final void showKeypad() {
+	public final void showKeypad() {
+		setTitle("Keypad");
+		hidePanels();
 		monkey.shell("am start -a android.intent.action.DIAL");
 		keypadPanel.setVisible(true);
 	}
@@ -93,13 +92,11 @@ public class SuperFrame extends JFrame{
 		ImageIcon favoritesIcon = new ImageIcon(this.getClass().getResource("/img/Favorites1.png"));
 		ImageIcon keypadIcon = new ImageIcon(getClass().getResource("/img/Keypad1.png"));
 		ImageIcon contactsIcon = new ImageIcon(getClass().getResource("/img/Contacts1.png"));
-		ImageIcon addIcon = new ImageIcon(getClass().getResource("/img/Add1.png"));
 		ImageIcon textingIcon = new ImageIcon(getClass().getResource("/img/Texting1.png"));
 		
 		ImageIcon favoritesIcon2 = new ImageIcon(this.getClass().getResource("/img/Favorites2.png"));
 		ImageIcon keypadIcon2 = new ImageIcon(getClass().getResource("/img/Keypad2.png"));
 		ImageIcon contactsIcon2 = new ImageIcon(getClass().getResource("/img/Contacts2.png"));
-		ImageIcon addIcon2 = new ImageIcon(getClass().getResource("/img/Add2.png"));
 		ImageIcon textingIcon2 = new ImageIcon(getClass().getResource("/img/Texting2.png"));
 		
 		JToggleButton favoritesButton = new JToggleButton(favoritesIcon);
@@ -111,9 +108,6 @@ public class SuperFrame extends JFrame{
 		JToggleButton contactsButton = new JToggleButton(contactsIcon);
 		contactsButton.setToolTipText("Contacts");
 		contactsButton.setSelectedIcon(contactsIcon2);
-		JToggleButton addButton = new JToggleButton(addIcon);
-		addButton.setToolTipText("Add Contact");
-		addButton.setSelectedIcon(addIcon2);
 		JToggleButton textingButton = new JToggleButton(textingIcon);
 		textingButton.setToolTipText("Texting App");
 		textingButton.setSelectedIcon(textingIcon2);
@@ -122,7 +116,6 @@ public class SuperFrame extends JFrame{
 	    group.add(favoritesButton);
 	    group.add(keypadButton);
 	    group.add(contactsButton);
-	    group.add(addButton);
 	    group.add(textingButton);
 		
 	    favoritesButton.addActionListener(new ActionListener() {
@@ -136,9 +129,6 @@ public class SuperFrame extends JFrame{
 	    
 		keypadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				// Place keypad in the viewed area
-				hidePanels();
-				setTitle("Keypad");
 				showKeypad();
 			}
 		});
@@ -160,19 +150,9 @@ public class SuperFrame extends JFrame{
 			}
 		});
 		
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				// Place contacts in the viewed area
-				setTitle("Add Contact");
-				hidePanels();
-				addContactPanel.setVisible(true);
-			}
-		});
-		
 		toolbar.add(favoritesButton);
 		toolbar.add(keypadButton);
 		toolbar.add(contactsButton);
-		toolbar.add(addButton);
 		toolbar.add(textingButton);
 		
 		add(toolbar, BorderLayout.NORTH);
@@ -182,8 +162,6 @@ public class SuperFrame extends JFrame{
 		keypadPanel.setVisible(false);
 		contactsPanel.setVisible(false);
 		textingPanel.setVisible(false);
-		addContactPanel.setVisible(false);
 		optionsPanel.setVisible(false);
 	}
-	
 }

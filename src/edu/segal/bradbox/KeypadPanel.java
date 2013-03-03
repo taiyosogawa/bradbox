@@ -5,6 +5,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BoxLayout;
@@ -16,16 +21,19 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 public class KeypadPanel extends JPanel{
 	JavaMonkey monkey;
 	final static private String[] keypadLabels = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"};
+	final static private String[] numberStrings = {"", "", "[AaBbCc ]", "[DdEeFf ]", "[GgHhIi ]", "[JjKkLl ]", "[MmNnOo ]", "[PpQqRrSs ]", "[TtUuVv ]", "[WwXxYyZz ]"}; 
 	final static private Map<String, String> keyCodeMap = new HashMap<String, String>();
 	final private JTextField numberField = new JTextField(12);
 	final private JLabel callingLabel = new JLabel();
 	JButton callButton = new JButton("Call");
-	//callButton.setPreferredSize(100,100);
+	JButton contactButton1 = new JButton("Mom");
 	
 	/**
 	 *  Required for a JPanel
@@ -50,7 +58,6 @@ public class KeypadPanel extends JPanel{
 	private final void initLookandFeel() {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-			//UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
@@ -83,7 +90,19 @@ public class KeypadPanel extends JPanel{
 		// Add a text field to the panel
 		JPanel numberFieldPanel = new JPanel();
 		numberFieldPanel.add(numberField);
-		//numberFieldPanel.setPreferredSize(new Dimension(1200,900));
+		numberField.getDocument().addDocumentListener(new DocumentListener()
+        {
+            public void changedUpdate(DocumentEvent arg0) {
+            }
+            
+            public void insertUpdate(DocumentEvent arg0) {
+                searchFor(numberField.getText());
+            }
+
+            public void removeUpdate(DocumentEvent arg0) {
+                searchFor(numberField.getText());
+            }
+        });
 		
 		// Customize the text field font
 		Font numberFont = new Font("SansSerif", Font.BOLD, 40);
@@ -159,10 +178,17 @@ public class KeypadPanel extends JPanel{
 				if(callButton.getText().equals("Call")) {
 					initiateCall();
 				} else {
-					endCall(callButton);
+					endCall();
 				}
 			}
 		});
+		
+		this.add(contactButton1);
+	}
+	
+	public void acceptButtonPush() {
+		if(callButton.getText() == "Call") initiateCall();
+		else endCall();
 	}
 	
 	public void initiateCall() {
@@ -174,12 +200,63 @@ public class KeypadPanel extends JPanel{
 		monkey.press("KEYCODE_CALL");	
 	}
 	
-	public void endCall(JButton callButton) {
+	public void endCall() {
 		callButton.setText("Call");
 		callButton.setBackground(Constants.GREEN);
 		numberField.setText("");
 		callingLabel.setText("");
 		monkey.press("KEYCODE_ENDCALL");
+	}
+	
+	private void searchFor(String searchTerm) {
+		String globAlphaTerm = "";
+		for (int i = 0; i < searchTerm.length(); i++) {
+			
+			System.out.println((int) searchTerm.charAt(i) - 48);
+			globAlphaTerm += numberStrings[((int) searchTerm.charAt(i)) - 48];
+			System.out.println(globAlphaTerm);
+		}
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection connection = null;
+		    try {
+		      // create a database connection
+		      connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/contacts2.db");
+		      Statement statement = connection.createStatement();
+		      statement.setQueryTimeout(30);  // set timeout to 30 sec.
+		     
+		      //ResultSet rs = statement.executeQuery("select * from contact_entities_view where (display_name like '" + searchTerm + "%' or data1 like '" + searchTerm + "%') and mimetype = 'vnd.android.cursor.item/phone_v2'");
+		      ResultSet rs = statement.executeQuery("select * from contact_entities_view where (display_name glob '*" + globAlphaTerm + "*' or data1 glob '*" + searchTerm + "*') and mimetype = 'vnd.android.cursor.item/phone_v2'");
+		      // put a for loop here that iterates for each search result panel available
+		      if(rs.next()) {
+		        // read the result set
+		      	contactButton1.setText(rs.getString("display_name"));
+		        System.out.println("name = " + rs.getString("display_name"));
+		        System.out.println("number = " + rs.getString("data1"));
+		      }
+		      else {
+		    	  contactButton1.setText("Mom");
+		      }
+		    }
+		    catch(SQLException e) {
+		      // if the error message is "out of memory", 
+		      // it probably means no database file is found
+		      System.err.println(e.getMessage());
+		    }
+		    finally {
+		      try {
+		        if(connection != null)
+		          connection.close();
+		      }
+		      catch(SQLException e) {
+		        // connection close failed.
+		        System.err.println(e);
+		      }
+		    }
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 }
