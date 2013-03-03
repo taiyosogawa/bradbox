@@ -4,13 +4,13 @@ import javax.swing.SwingUtilities;
 
 public class BradBox{
 	final JavaMonkey monkey = new JavaMonkey();
-	SerialListener listener = new SerialListener(this);
+	Serialio serialio = new Serialio(this);
 	public SuperFrame gui;
 	
 	public void startKeypad() {
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                gui = new SuperFrame(monkey);
+                gui = new SuperFrame(monkey, serialio);
                 gui.setVisible(true);
             }
 		});

@@ -22,12 +22,8 @@ public class ContactsPanel extends JPanel {
 	ContactsPanel(JavaMonkey m) {
 		monkey = m;
 		add(lookupField);
-		
 		JButton searchButton = new JButton("Search");
 		add(searchButton);
-		
-		
-		
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				searchFor(lookupField.getText());
@@ -39,35 +35,29 @@ public class ContactsPanel extends JPanel {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection connection = null;
-		    try
-		    {
+		    try {
 		      // create a database connection
 		      connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/contacts2.db");
 		      Statement statement = connection.createStatement();
 		      statement.setQueryTimeout(30);  // set timeout to 30 sec.
 		      ResultSet rs = statement.executeQuery("select * from contact_entities_view where (display_name like '" + searchTerm + "%' or data1 like '" + searchTerm + "%') and mimetype = 'vnd.android.cursor.item/phone_v2'");
-		      while(rs.next())
-		      {
+		      while(rs.next()) {
 		        // read the result set
 		        System.out.println("name = " + rs.getString("display_name"));
 		        System.out.println("number = " + rs.getString("data1"));
 		      }
 		    }
-		    catch(SQLException e)
-		    {
+		    catch(SQLException e) {
 		      // if the error message is "out of memory", 
 		      // it probably means no database file is found
 		      System.err.println(e.getMessage());
 		    }
-		    finally
-		    {
-		      try
-		      {
+		    finally {
+		      try {
 		        if(connection != null)
 		          connection.close();
 		      }
-		      catch(SQLException e)
-		      {
+		      catch(SQLException e) {
 		        // connection close failed.
 		        System.err.println(e);
 		      }

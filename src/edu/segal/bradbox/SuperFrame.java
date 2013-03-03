@@ -17,11 +17,12 @@ import javax.swing.border.EmptyBorder;
 
 
 public class SuperFrame extends JFrame{
-	private JavaMonkey monkey;
+	public JavaMonkey monkey;
 	public KeypadPanel keypadPanel;
 	public ContactsPanel contactsPanel;
 	public TextingPanel textingPanel;
 	public AddContactPanel addContactPanel;
+	public OptionsPanel optionsPanel;
 	JPanel displayedPanel = new JPanel();
 
 	/**
@@ -30,12 +31,13 @@ public class SuperFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	// Constructor function
-	public SuperFrame(JavaMonkey m) {
+	public SuperFrame(JavaMonkey m, Serialio s) {
 		initJavaMonkey(m);
 		keypadPanel = new KeypadPanel(monkey);
 		contactsPanel = new ContactsPanel(monkey);
 		textingPanel = new TextingPanel(monkey);
 		addContactPanel = new AddContactPanel(monkey);
+		optionsPanel = new OptionsPanel(monkey, s);
 	    initWindow();
 		initMenu();
 
@@ -46,6 +48,7 @@ public class SuperFrame extends JFrame{
 		displayedPanel.add(contactsPanel);
 		displayedPanel.add(textingPanel);
 		displayedPanel.add(addContactPanel);
+		displayedPanel.add(optionsPanel);
 		displayedPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		displayedPanel.setBackground(Constants.GREEN);
 		((FlowLayout)displayedPanel.getLayout()).setVgap(0);
@@ -56,7 +59,7 @@ public class SuperFrame extends JFrame{
 	}
 	
 	private final void initJavaMonkey(JavaMonkey m) {
-		// Initialize the JavaMonkey
+		// Initialize the JavaMonkey and Serialio
 	    if ( m == null ) {
             throw new IllegalStateException("JavaMonkey is not initialized in SuperFrame.");
 	    }
@@ -122,6 +125,15 @@ public class SuperFrame extends JFrame{
 	    group.add(addButton);
 	    group.add(textingButton);
 		
+	    favoritesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				// Place keypad in the viewed area
+				hidePanels();
+				setTitle("Options");
+				optionsPanel.setVisible(true);
+			}
+		});
+	    
 		keypadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				// Place keypad in the viewed area
@@ -171,6 +183,7 @@ public class SuperFrame extends JFrame{
 		contactsPanel.setVisible(false);
 		textingPanel.setVisible(false);
 		addContactPanel.setVisible(false);
+		optionsPanel.setVisible(false);
 	}
 	
 }

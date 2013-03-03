@@ -34,6 +34,7 @@ adb pull /data/data/com.android.providers.contacts/databases/contacts2.db
 do every time we query a contact {
 sqlite3 contacts2.db
 select data1 from contact_entities_view where (display_name like 'taiyo%' or data1 like '425%') and mimetype = 'vnd.android.cursor.item/phone_v2';
+select data1 from contact_entities_view where display_name glob '*[TtUuVv][AaBbCc][GgHhIi]*';
 }
 
 OPTION2 (query within adb)

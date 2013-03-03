@@ -15,7 +15,7 @@
 
 #define ledPin  13                  // LED connected to digital pin 13
 #define buttonPin 2                 // button on pin 2
-
+#define loudspeakerPin 3            // high for loudspeaker on, low for loudspeaker off
 int value = LOW;                    // previous value of the LED
 int buttonState;                    // variable to store button state
 int lastButtonState;                // variable to store last button state
@@ -23,18 +23,33 @@ long startTime;                     // start time for stop watch
 long elapsedTime;                   // elapsed time for stop watch
 int fractional;                     // variable used to store fractional part of time
 String output;
+char loudspeakerChar;              // 'h' for high (on), 'l' for low (off)
 
 void setup() {
    Serial.begin(9600);              // setup serial with 9600 baud rate
   
    pinMode(ledPin, OUTPUT);         // sets the digital pin as output
    pinMode(buttonPin, INPUT);       // sets the digital pin as input
+   pinMode(loudspeakerPin, OUTPUT);
+   digitalWrite(loudspeakerPin, LOW);
 }
 
 void loop() {
+   // check for loudspeaker
+   loudspeakerChar = Serial.read();
+   if(loudspeakerChar == 'h') {
+     digitalWrite(loudspeakerPin, HIGH);
+     // This next line should be deleted
+     digitalWrite(ledPin, HIGH);
+     
+   } else if(loudspeakerChar == 'l') {
+     digitalWrite(loudspeakerPin, LOW);
+     digitalWrite(ledPin, LOW);
+   }
+  
    // check for button press
    buttonState = digitalRead(buttonPin);                   // read the button state and store
-  
+   
    // check for a low to high transistion (button press)
    if (buttonState == HIGH && lastButtonState == LOW) {    
         startTime = millis();                                // store the start time

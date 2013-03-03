@@ -2,6 +2,7 @@ package edu.segal.bradbox;
 
 // Import serial utilities
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import gnu.io.CommPortIdentifier; 
@@ -11,7 +12,7 @@ import gnu.io.SerialPortEventListener;
 import java.util.Enumeration;
 
 
-public class SerialListener implements SerialPortEventListener {
+public class Serialio implements SerialPortEventListener {
 	BradBox bradbox;
 	JavaMonkey monkey;
     SerialPort serialPort;
@@ -26,12 +27,29 @@ public class SerialListener implements SerialPortEventListener {
     // COM4 for LEELA
     private static final String SERIAL_PORT = "COM4";
     
-    SerialListener(BradBox bb) {
+    Serialio(BradBox bb) {
     	bradbox = bb;
     	monkey = bb.monkey;
     	initialize();
     }
     
+    public void LoudspeakerOn() {
+    	try {
+			output.write('h');
+		} catch (IOException e) {
+			System.out.println("Error: could not write LoudspeakerOn");
+			e.printStackTrace();
+		}
+    }
+    
+    public void LoudspeakerOff() {
+    	try {
+			output.write('l');
+		} catch (IOException e) {
+			System.out.println("Error: could not write LoudspeakerOn");
+			e.printStackTrace();
+		}
+    }
     
     public void initialize () {
     	// Initialization for Arduino communication
@@ -46,12 +64,10 @@ public class SerialListener implements SerialPortEventListener {
 				break;
 			}
 		}
-		
 		if (portId == null) {
 			System.out.println("Could not find COM port.");
 			return;
 		}
-
 		try {
 			// open serial port, and use class name for the appName.
 			serialPort = (SerialPort) portId.open(this.getClass().getName(),
@@ -62,7 +78,6 @@ public class SerialListener implements SerialPortEventListener {
 					SerialPort.DATABITS_8,
 					SerialPort.STOPBITS_1,
 					SerialPort.PARITY_NONE);
-
 			// open the streams
 			input = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
 			output = serialPort.getOutputStream();
@@ -73,6 +88,17 @@ public class SerialListener implements SerialPortEventListener {
 		} catch (Exception e) {
 			System.err.println(e.toString());
 		} 
+    }
+    
+    public void turnHigh() {
+    	while(true)
+			try {
+				System.out.println("Printing high, bitches");
+				output.write('h');
+			} catch (IOException e) {
+				System.out.println("Error: could not write high");
+				e.printStackTrace();
+			}
     }
     
     /**
@@ -99,12 +125,10 @@ public class SerialListener implements SerialPortEventListener {
 					monkey.press("KEYCODE_CALL");
 					//bradbox.gui.keypadPanel.initiateCall();
 				}
-				
 				if(inputLine.equals("long")){
 					System.out.println("Restarting Device");
 					monkey.reboot();
 				}
-				
 			} catch (Exception e) {
 				System.err.println(e.toString());
 			}
