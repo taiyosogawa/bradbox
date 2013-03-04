@@ -16,9 +16,11 @@ import javax.swing.border.EmptyBorder;
 
 public class SuperFrame extends JFrame{
 	public JavaMonkey monkey;
+	public Serialio serialio;
 	public KeypadPanel keypadPanel;
 	public TextingPanel textingPanel;
 	public OptionsPanel optionsPanel;
+	public EditContactPanel editContactPanel;
 	JPanel displayedPanel = new JPanel();
 
 	/**
@@ -28,10 +30,11 @@ public class SuperFrame extends JFrame{
 
 	// Constructor function
 	public SuperFrame(JavaMonkey m, Serialio s) {
-		initJavaMonkey(m);
-		keypadPanel = new KeypadPanel(monkey);
+		initIO(m, s);
+		keypadPanel = new KeypadPanel(this);
 		textingPanel = new TextingPanel(monkey);
-		optionsPanel = new OptionsPanel(this, monkey, s);
+		optionsPanel = new OptionsPanel(this);
+		editContactPanel = new EditContactPanel(this, "", "");
 	    initWindow();
 		initMenu();
 
@@ -40,6 +43,7 @@ public class SuperFrame extends JFrame{
 		displayedPanel.add(keypadPanel);
 		displayedPanel.add(textingPanel);
 		displayedPanel.add(optionsPanel);
+		//displayedPanel.add(editContactPanel);
 		displayedPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		displayedPanel.setBackground(Constants.GREEN);
 		((FlowLayout)displayedPanel.getLayout()).setVgap(0);
@@ -49,12 +53,24 @@ public class SuperFrame extends JFrame{
 		showKeypad();
 	}
 	
-	private final void initJavaMonkey(JavaMonkey m) {
+	public final void openEditContact(String nm, String no) {
+		editContactPanel = new EditContactPanel(this, nm, no);
+		displayedPanel.add(editContactPanel);
+		hidePanels();
+		setTitle("Edit Contact " + nm);
+		editContactPanel.setVisible(true);
+	}
+	
+	private final void initIO(JavaMonkey m, Serialio s) {
 		// Initialize the JavaMonkey and Serialio
 	    if ( m == null ) {
             throw new IllegalStateException("JavaMonkey is not initialized in SuperFrame.");
 	    }
 	    this.monkey = m;
+	    if ( s == null ) {
+            throw new IllegalStateException("Serialio is not initialized in SuperFrame.");
+	    }
+	    this.serialio = s;
 	}
 	
 	private final void initWindow() {
@@ -77,6 +93,7 @@ public class SuperFrame extends JFrame{
 		setTitle("Keypad");
 		hidePanels();
 		monkey.shell("am start -a android.intent.action.DIAL");
+		keypadPanel.searchContacts();
 		keypadPanel.setVisible(true);
 	}
 
@@ -140,5 +157,6 @@ public class SuperFrame extends JFrame{
 		keypadPanel.setVisible(false);
 		textingPanel.setVisible(false);
 		optionsPanel.setVisible(false);
+		editContactPanel.setVisible(false);
 	}
 }

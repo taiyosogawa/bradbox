@@ -28,12 +28,12 @@ public class OptionsPanel extends JPanel{
 	JTextField numberField = new JTextField(12);
 
 	
-	OptionsPanel(SuperFrame sf, JavaMonkey m, Serialio sio) {
+	OptionsPanel(SuperFrame sf) {
 		superframe = sf;
-		monkey = m;
-		serialio = sio;
-		add(loudspeakerButton);
+		monkey = sf.monkey;
+		serialio = sf.serialio;
 		add(homeButton);
+		add(loudspeakerButton);
 		loudspeakerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if(loudspeakerButton.getText() == "Turn Loudspeaker On") {
@@ -73,8 +73,8 @@ public class OptionsPanel extends JPanel{
 				String number = numberField.getText();
 				numberField.setText("");
 				monkey.shell("am broadcast -a edu.segal.androidbradbox.addcontact -e name '" + name + "' -e number '"+ number + "'");
+				System.out.println("attempting to copy contacts");
 				try {
-					System.out.println("about to copy contacts");
 					Runtime.getRuntime().exec("/platform-tools/copycontacts.exe");
 					/*
 					//we might consider using pr.destroy(); after a certain amount of time. The following will print output from copycontacts.exe

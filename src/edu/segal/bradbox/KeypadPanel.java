@@ -25,6 +25,7 @@ import javax.swing.event.DocumentListener;
 
 
 public class KeypadPanel extends JPanel{
+	SuperFrame superframe;
 	JavaMonkey monkey;
 	final static private String[] keypadLabels = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"};
 	final static private String[] numberStrings = {"", "", "[AaBbCc]", "[DdEeFf]", "[GgHhIi]", "[JjKkLl]", "[MmNnOo]", "[PpQqRrSs]", "[TtUuVv]", "[WwXxYyZz]"}; 
@@ -39,8 +40,9 @@ public class KeypadPanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public KeypadPanel(JavaMonkey m) {
-		initJavaMonkey(m);
+	public KeypadPanel(SuperFrame sf) {
+		superframe = sf;
+		initJavaMonkey(sf.monkey);
 	    initKeyCodeMap();
 	    initLookandFeel();
 	    initKeypad();
@@ -191,6 +193,10 @@ public class KeypadPanel extends JPanel{
 		this.add(contactsPanel);
 	}
 	
+	public void openEditContact(String nm, String no) {
+		superframe.openEditContact(nm, no);
+	}
+	
 	public void acceptButtonPush() {
 		if(callButton.getText().equals("Call")) initiateCall();
 		else endCall();
@@ -240,7 +246,7 @@ public class KeypadPanel extends JPanel{
 		contacts[2].setNumber("789");
 	}
 	
-	private void searchContacts() {
+	public void searchContacts() {
 		String searchTerm = numberField.getText();
 		if (searchTerm.equals("")) {
 			initFavorites();

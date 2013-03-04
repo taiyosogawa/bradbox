@@ -43,6 +43,12 @@ public class ContactModule extends JPanel {
 				keypad.initiateCall(numberLabel.getText());
 			}
 		});
+		
+		editButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				keypad.openEditContact(nameLabel.getText(), numberLabel.getText());
+			}
+		});
 	}
 	
 	public void setName(String nm) {
