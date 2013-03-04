@@ -11,6 +11,10 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class TextingPanel extends JPanel {
+	/**
+	 * Required for JPanel
+	 */
+	private static final long serialVersionUID = 1L;
 	private JavaMonkey monkey;
 	JTextField numberField = new JTextField(12);
 	JTextField messageField = new JTextField(30);

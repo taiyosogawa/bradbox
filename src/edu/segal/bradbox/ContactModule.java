@@ -1,13 +1,19 @@
 package edu.segal.bradbox;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class ContactModule extends JPanel {
+	/**
+	 * Required for JPanel
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	KeypadPanel keypad;
 	JLabel nameLabel = new JLabel();
 	JLabel numberLabel = new JLabel();
@@ -31,6 +37,12 @@ public class ContactModule extends JPanel {
 		this.add(callButton);
 		this.add(smsButton);
 		this.add(editButton);
+		
+		callButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				keypad.initiateCall(numberLabel.getText());
+			}
+		});
 	}
 	
 	public void setName(String nm) {

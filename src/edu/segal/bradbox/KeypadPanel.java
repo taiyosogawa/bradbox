@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -28,7 +27,7 @@ import javax.swing.event.DocumentListener;
 public class KeypadPanel extends JPanel{
 	JavaMonkey monkey;
 	final static private String[] keypadLabels = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"};
-	final static private String[] numberStrings = {"", "", "[AaBbCc ]", "[DdEeFf ]", "[GgHhIi ]", "[JjKkLl ]", "[MmNnOo ]", "[PpQqRrSs ]", "[TtUuVv ]", "[WwXxYyZz ]"}; 
+	final static private String[] numberStrings = {"", "", "[AaBbCc]", "[DdEeFf]", "[GgHhIi]", "[JjKkLl]", "[MmNnOo]", "[PpQqRrSs]", "[TtUuVv]", "[WwXxYyZz]"}; 
 	final static private Map<String, String> keyCodeMap = new HashMap<String, String>();
 	final private JTextField numberField = new JTextField(12);
 	final private JLabel callingLabel = new JLabel();
@@ -52,7 +51,7 @@ public class KeypadPanel extends JPanel{
 	    if ( m == null ) {
             throw new IllegalStateException("JavaMonkey is not initialized in KeypadPanel.");
 	    }
-	    this.monkey = m;
+	    monkey = m;
 	}
 	
 	private final void initLookandFeel() {
@@ -193,11 +192,11 @@ public class KeypadPanel extends JPanel{
 	}
 	
 	public void acceptButtonPush() {
-		if(callButton.getText() == "Call") initiateCall();
+		if(callButton.getText().equals("Call")) initiateCall();
 		else endCall();
 	}
 	
-	public void initiateCall() {
+	private void initiateCall() {
 		callButton.setText("End Call");
 		callButton.setBackground(Constants.RED);
 		String number = numberField.getText();
@@ -206,7 +205,25 @@ public class KeypadPanel extends JPanel{
 		monkey.press("KEYCODE_CALL");	
 	}
 	
-	public void endCall() {
+	public void initiateCall(String number) {
+		if(callButton.getText().equals("Call")) {
+			callButton.setText("End Call");
+			callButton.setBackground(Constants.RED);
+			String oldText = numberField.getText();
+			numberField.setText("");
+			callingLabel.setText("    Calling " + number + " . . .");
+			System.out.println("old text: " + oldText.length());
+			for(int i = 0; i < oldText.length(); i++) {
+				monkey.press("KEYCODE_DEL");
+			}
+			for(int i = 0; i < number.length(); i++) {
+				monkey.press(keyCodeMap.get(number.substring(i, i + 1)));
+			}
+			monkey.press("KEYCODE_CALL");	
+		}
+	}
+	
+	private void endCall() {
 		callButton.setText("Call");
 		callButton.setBackground(Constants.GREEN);
 		numberField.setText("");
