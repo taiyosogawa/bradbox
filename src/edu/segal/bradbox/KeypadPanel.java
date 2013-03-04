@@ -213,7 +213,7 @@ public class KeypadPanel extends JPanel{
 			numberField.setText("");
 			callingLabel.setText("    Calling " + number + " . . .");
 			System.out.println("old text: " + oldText.length());
-			for(int i = 0; i < oldText.length(); i++) {
+			for(int i = 0; i < oldText.length() + 10; i++) {
 				monkey.press("KEYCODE_DEL");
 			}
 			for(int i = 0; i < number.length(); i++) {
