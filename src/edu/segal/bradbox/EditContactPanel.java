@@ -67,6 +67,21 @@ public class EditContactPanel extends JPanel{
 				superframe.showKeypad();
 			}
 		});
+		
+		doneButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				monkey.shell("am broadcast -a edu.segal.androidbradbox.deletecontact -e name '" + oldName + "'");
+				monkey.shell("am broadcast -a edu.segal.androidbradbox.addcontact -e name '" + nameField.getText() + "' -e number '"+ numberField.getText() + "'");
+				System.out.println("attempting to copy contacts");
+				try {
+					Runtime.getRuntime().exec("/platform-tools/copycontacts.exe");
+				} catch (IOException e) {
+					System.out.println("Error: IOException when calling copycontacts.exe");
+					e.printStackTrace();
+				}
+				superframe.showKeypad();
+			}
+		});
 	}
 
 }
