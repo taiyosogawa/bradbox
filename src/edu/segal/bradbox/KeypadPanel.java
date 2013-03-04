@@ -33,8 +33,8 @@ public class KeypadPanel extends JPanel{
 	final private JTextField numberField = new JTextField(12);
 	final private JLabel callingLabel = new JLabel();
 	JButton callButton = new JButton("Call");
-	JButton contactButton1 = new JButton("Mom");
-	
+	private JPanel contactsPanel = new JPanel();
+	private ContactModule[] contacts = new ContactModule[3];
 	/**
 	 *  Required for a JPanel
 	 */
@@ -96,11 +96,11 @@ public class KeypadPanel extends JPanel{
             }
             
             public void insertUpdate(DocumentEvent arg0) {
-                searchFor(numberField.getText());
+                searchContacts();
             }
 
             public void removeUpdate(DocumentEvent arg0) {
-                searchFor(numberField.getText());
+                searchContacts();
             }
         });
 		
@@ -183,7 +183,13 @@ public class KeypadPanel extends JPanel{
 			}
 		});
 		
-		this.add(contactButton1);
+		for(int i = 0; i < contacts.length; i++) contacts[i] = new ContactModule(this, "", "");
+		initFavorites();
+		contactsPanel.setLayout(new BoxLayout(contactsPanel, BoxLayout.Y_AXIS));
+		for(int i = 0; i < contacts.length; i++) {
+			contactsPanel.add(contacts[i]);
+		}
+		this.add(contactsPanel);
 	}
 	
 	public void acceptButtonPush() {
@@ -208,13 +214,25 @@ public class KeypadPanel extends JPanel{
 		monkey.press("KEYCODE_ENDCALL");
 	}
 	
-	private void searchFor(String searchTerm) {
+	public void initFavorites() {
+		contacts[0].setName("Mom");
+		contacts[0].setNumber("123");
+		contacts[1].setName("Dad");
+		contacts[1].setNumber("456");
+		contacts[2].setName("Deb");
+		contacts[2].setNumber("789");
+	}
+	
+	private void searchContacts() {
+		String searchTerm = numberField.getText();
+		if (searchTerm.equals("")) {
+			initFavorites();
+			return;
+		}
+		
 		String globAlphaTerm = "";
 		for (int i = 0; i < searchTerm.length(); i++) {
-			
-			System.out.println((int) searchTerm.charAt(i) - 48);
 			globAlphaTerm += numberStrings[((int) searchTerm.charAt(i)) - 48];
-			System.out.println(globAlphaTerm);
 		}
 		
 		try {
@@ -225,18 +243,22 @@ public class KeypadPanel extends JPanel{
 		      connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/contacts2.db");
 		      Statement statement = connection.createStatement();
 		      statement.setQueryTimeout(30);  // set timeout to 30 sec.
-		     
-		      //ResultSet rs = statement.executeQuery("select * from contact_entities_view where (display_name like '" + searchTerm + "%' or data1 like '" + searchTerm + "%') and mimetype = 'vnd.android.cursor.item/phone_v2'");
+		      
 		      ResultSet rs = statement.executeQuery("select * from contact_entities_view where (display_name glob '*" + globAlphaTerm + "*' or data1 glob '*" + searchTerm + "*') and mimetype = 'vnd.android.cursor.item/phone_v2'");
 		      // put a for loop here that iterates for each search result panel available
-		      if(rs.next()) {
-		        // read the result set
-		      	contactButton1.setText(rs.getString("display_name"));
-		        System.out.println("name = " + rs.getString("display_name"));
-		        System.out.println("number = " + rs.getString("data1"));
-		      }
-		      else {
-		    	  contactButton1.setText("Mom");
+		      for(int i = 0; i < contacts.length; i++) {
+			      if (rs.next()) {  
+			          // read the result set
+			    	  contacts[i].setVisible(true);
+			    	  contacts[i].setName(rs.getString("display_name"));
+			    	  contacts[i].setNumber(rs.getString("data1"));
+			    	  
+			          System.out.println("name = " + rs.getString("display_name"));
+			          System.out.println("number = " + rs.getString("data1"));
+			      }
+			      else {
+			    	  contacts[i].setVisible(false);
+			      }
 		      }
 		    }
 		    catch(SQLException e) {

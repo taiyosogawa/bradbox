@@ -19,7 +19,6 @@ import javax.swing.border.EmptyBorder;
 public class SuperFrame extends JFrame{
 	public JavaMonkey monkey;
 	public KeypadPanel keypadPanel;
-	public ContactsPanel contactsPanel;
 	public TextingPanel textingPanel;
 	public OptionsPanel optionsPanel;
 	JPanel displayedPanel = new JPanel();
@@ -33,7 +32,6 @@ public class SuperFrame extends JFrame{
 	public SuperFrame(JavaMonkey m, Serialio s) {
 		initJavaMonkey(m);
 		keypadPanel = new KeypadPanel(monkey);
-		contactsPanel = new ContactsPanel(monkey);
 		textingPanel = new TextingPanel(monkey);
 		optionsPanel = new OptionsPanel(this, monkey, s);
 	    initWindow();
@@ -41,9 +39,7 @@ public class SuperFrame extends JFrame{
 
 		add(displayedPanel);
 		keypadPanel.setBackground(Constants.RED);
-		contactsPanel.setBackground(Constants.RED);
 		displayedPanel.add(keypadPanel);
-		displayedPanel.add(contactsPanel);
 		displayedPanel.add(textingPanel);
 		displayedPanel.add(optionsPanel);
 		displayedPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -91,12 +87,10 @@ public class SuperFrame extends JFrame{
 
 		ImageIcon favoritesIcon = new ImageIcon(this.getClass().getResource("/img/Favorites1.png"));
 		ImageIcon keypadIcon = new ImageIcon(getClass().getResource("/img/Keypad1.png"));
-		ImageIcon contactsIcon = new ImageIcon(getClass().getResource("/img/Contacts1.png"));
 		ImageIcon textingIcon = new ImageIcon(getClass().getResource("/img/Texting1.png"));
 		
 		ImageIcon favoritesIcon2 = new ImageIcon(this.getClass().getResource("/img/Favorites2.png"));
 		ImageIcon keypadIcon2 = new ImageIcon(getClass().getResource("/img/Keypad2.png"));
-		ImageIcon contactsIcon2 = new ImageIcon(getClass().getResource("/img/Contacts2.png"));
 		ImageIcon textingIcon2 = new ImageIcon(getClass().getResource("/img/Texting2.png"));
 		
 		JToggleButton favoritesButton = new JToggleButton(favoritesIcon);
@@ -105,17 +99,13 @@ public class SuperFrame extends JFrame{
 		JToggleButton keypadButton = new JToggleButton(keypadIcon);
 		keypadButton.setToolTipText("Keypad");
 		keypadButton.setSelectedIcon(keypadIcon2);
-		JToggleButton contactsButton = new JToggleButton(contactsIcon);
-		contactsButton.setToolTipText("Contacts");
-		contactsButton.setSelectedIcon(contactsIcon2);
 		JToggleButton textingButton = new JToggleButton(textingIcon);
-		textingButton.setToolTipText("Texting App");
+		textingButton.setToolTipText("SMS");
 		textingButton.setSelectedIcon(textingIcon2);
 		
 	    ButtonGroup group = new ButtonGroup();
 	    group.add(favoritesButton);
 	    group.add(keypadButton);
-	    group.add(contactsButton);
 	    group.add(textingButton);
 		
 	    favoritesButton.addActionListener(new ActionListener() {
@@ -141,18 +131,8 @@ public class SuperFrame extends JFrame{
 			}
 		});
 		
-		contactsButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				// Place contacts in the viewed area
-				setTitle("Contacts");
-				hidePanels();
-				contactsPanel.setVisible(true);
-			}
-		});
-		
 		toolbar.add(favoritesButton);
 		toolbar.add(keypadButton);
-		toolbar.add(contactsButton);
 		toolbar.add(textingButton);
 		
 		add(toolbar, BorderLayout.NORTH);
@@ -160,7 +140,6 @@ public class SuperFrame extends JFrame{
 	
 	private final void hidePanels() {
 		keypadPanel.setVisible(false);
-		contactsPanel.setVisible(false);
 		textingPanel.setVisible(false);
 		optionsPanel.setVisible(false);
 	}
