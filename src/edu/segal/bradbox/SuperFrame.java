@@ -38,19 +38,23 @@ public class SuperFrame extends JFrame{
 	    initWindow();
 		initMenu();
 
-		add(displayedPanel);
-		keypadPanel.setBackground(Constants.RED);
+		
+		setSize(950, 550);
+		BorderLayout layout = new BorderLayout();
+		layout.setVgap(0);
+		setLayout(layout);
+		add(displayedPanel, BorderLayout.CENTER);
+		keypadPanel.setBackground(Constants.GRAY);
 		displayedPanel.add(keypadPanel);
 		displayedPanel.add(textingPanel);
-		displayedPanel.add(optionsPanel);
-		//displayedPanel.add(editContactPanel);
+		displayedPanel.add(optionsPanel);		
 		displayedPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
-		displayedPanel.setBackground(Constants.GREEN);
 		((FlowLayout)displayedPanel.getLayout()).setVgap(0);
 		((FlowLayout)displayedPanel.getLayout()).setHgap(0);
 
 		hidePanels();
 		showKeypad();
+		pack();
 	}
 	
 	public final void openEditContact(String nm, String no) {
@@ -150,7 +154,7 @@ public class SuperFrame extends JFrame{
 		toolbar.add(keypadButton);
 		toolbar.add(textingButton);
 		
-		add(toolbar, BorderLayout.NORTH);
+		//add(toolbar, BorderLayout.NORTH);
 	}
 	
 	private final void hidePanels() {
@@ -158,5 +162,11 @@ public class SuperFrame extends JFrame{
 		textingPanel.setVisible(false);
 		optionsPanel.setVisible(false);
 		editContactPanel.setVisible(false);
+	}
+	
+	public final void showOptions() {
+		hidePanels();
+		setTitle("Options");
+		optionsPanel.setVisible(true);
 	}
 }

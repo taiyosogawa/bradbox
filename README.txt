@@ -34,9 +34,14 @@ adb pull /data/data/com.android.providers.contacts/databases/contacts2.db
 do every time we query a contact {
 sqlite3 contacts2.db
 select data1 from contact_entities_view where (display_name like 'taiyo%' or data1 like '425%') and mimetype = 'vnd.android.cursor.item/phone_v2';
-select data1 from contact_entities_view where display_name glob '*[TtUuVv][AaBbCc][GgHhIi]*';
+select data1 from contact_entities_view where (display_name glob '*[TtUuVv][AaBbCc][GgHhIi]*') or data1 glob '*425*' and mimetype = 'vnd.android.cursor.item/phone_v2');
 }
 
 OPTION2 (query within adb)
 Instal sqlight on phone via this app https://play.google.com/store/apps/details?id=ptSoft.util.sqlite3forroot&hl=en
 
+
+
+
+SMS
+db stored at data/data/com.android.providers.telephony/databases/mmssms.db
