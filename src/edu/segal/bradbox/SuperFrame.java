@@ -1,6 +1,11 @@
 package edu.segal.bradbox;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -28,7 +33,7 @@ public class SuperFrame extends JFrame{
 		keypadPanel = new KeypadPanel(this);
 		textingPanel = new TextingPanel(monkey);
 		optionsPanel = new OptionsPanel(this);
-		editContactPanel = new EditContactPanel(this, "", "");
+		editContactPanel = new EditContactPanel(this, "", "", false, 0);
 	    initWindow();
 
 		
@@ -50,8 +55,8 @@ public class SuperFrame extends JFrame{
 		pack();
 	}
 	
-	public final void openEditContact(String nm, String no) {
-		editContactPanel = new EditContactPanel(this, nm, no);
+	public final void openEditContact(String nm, String no, boolean fav, int r) {
+		editContactPanel = new EditContactPanel(this, nm, no, fav, r);
 		displayedPanel.add(editContactPanel);
 		hidePanels();
 		setTitle("Edit Contact " + nm);
@@ -89,6 +94,7 @@ public class SuperFrame extends JFrame{
 	public final void showKeypad() {
 		setTitle("Keypad");
 		hidePanels();
+		keypadPanel.clearField();
 		keypadPanel.searchContacts();
 		keypadPanel.setVisible(true);
 	}
@@ -104,5 +110,42 @@ public class SuperFrame extends JFrame{
 		hidePanels();
 		setTitle("Options");
 		optionsPanel.setVisible(true);
+	}
+	
+	public final void updateFavorite(String newName, String rank) {
+		String queryString = "update names set name = '" + newName +"' where rank = " + rank;
+
+		System.out.println("update string: " + queryString);
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection connection = null;
+			try {
+			  // create a database connection
+			  connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/favorites.db");
+			  Statement statement = connection.createStatement();
+			  statement.setQueryTimeout(30);  // set timeout to 30 sec.
+			  statement.executeUpdate(queryString);
+			  Thread.sleep(250);
+			  showKeypad();
+
+			}
+		catch(SQLException | InterruptedException e) {
+		  // if the error message is "out of memory", 
+		  // it probably means no database file is found
+		  System.err.println(e.getMessage());
+		}
+		finally {
+		  try {
+		    if(connection != null)
+		      connection.close();
+		  }
+		  catch(SQLException e) {
+		    // connection close failed.
+		    System.err.println(e);
+		  }
+		}
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
 	}
 }

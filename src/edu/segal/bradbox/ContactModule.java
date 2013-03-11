@@ -22,11 +22,15 @@ public class ContactModule extends JPanel {
 	JButton callButton = new JButton("Call");
 	JButton smsButton = new JButton("Text");
 	JButton editButton = new JButton("Edit");
+	boolean fav;
+	int rank;
 
-	ContactModule(KeypadPanel k, String nm, String no) {
+	ContactModule(KeypadPanel k, String nm, String no, boolean f, int r) {
 		keypad = k;
 		setName(nm);
 		setNumber(no);
+		fav = f;
+		rank = r;
 		
 		Font buttonFont = new Font("SansSerif", Font.PLAIN, 18);
 		Font labelFont = new Font("SansSerif", Font.PLAIN, 12);
@@ -63,7 +67,7 @@ public class ContactModule extends JPanel {
 		
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				keypad.openEditContact(nameLabel.getText(), numberLabel.getText());
+				keypad.openEditContact(nameLabel.getText(), numberLabel.getText(), fav, rank);
 			}
 		});
 	}
@@ -74,5 +78,9 @@ public class ContactModule extends JPanel {
 
 	public void setNumber(String no) {
 		numberLabel.setText(no);
+	}
+	
+	public void setFav(boolean f) {
+		fav = f;
 	}
 }

@@ -229,7 +229,7 @@ public class KeypadPanel extends JPanel{
 			}
 		});
 		
-		for(int i = 0; i < contacts.length; i++) contacts[i] = new ContactModule(this, "", "");
+		for(int i = 0; i < contacts.length; i++) contacts[i] = new ContactModule(this, "", "", false, i + 1);
 		initFavorites();
 		contactsPanel.setLayout(new BoxLayout(contactsPanel, BoxLayout.Y_AXIS));
 		for(int i = 0; i < contacts.length; i++) {
@@ -250,13 +250,17 @@ public class KeypadPanel extends JPanel{
 			rightPanel.add(contactsPanel, BorderLayout.CENTER);
 	}
 	
-	public void openEditContact(String nm, String no) {
-		superframe.openEditContact(nm, no);
+	public void openEditContact(String nm, String no, boolean fav, int r) {
+		superframe.openEditContact(nm, no, fav, r);
 	}
 	
 	public void acceptButtonPush() {
 		if(callButton.getText().equals(Constants.CALL_STRING)) initiateCall(numberField.getText());
 		else endCall();
+	}
+	
+	public void clearField() {
+		numberField.setText("");
 	}
 	
 	public void initiateCall(String number) {
@@ -284,10 +288,46 @@ public class KeypadPanel extends JPanel{
 	}
 	
 	public void initFavorites() {
-		for(int i = 0; i < 6; i++) {
-			contacts[i].setName("Favorite " + Integer.toString(i + 1));
-			contacts[i].setNumber("");
-			contacts[i].setVisible(true);
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection connection = null;
+		    try {
+		      // create a database connection
+		      connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/favorites.db");
+		      Statement statement = connection.createStatement();
+		      statement.setQueryTimeout(30);  // set timeout to 30 sec.
+		      ResultSet rs = statement.executeQuery("select * from names order by rank");
+		      // put a for loop here that iterates for each search result panel available
+		      for(int i = 0; i < contacts.length; i++) {
+			      if (rs.next()) {  
+			          // read the result set
+			    	  contacts[i].setVisible(true);
+			    	  contacts[i].setName(rs.getString("name"));
+			    	  contacts[i].setNumber(getFavoriteNumber(rs.getString("name")));
+			    	  contacts[i].setFav(true);
+			      }
+			      else {
+			    	  contacts[i].setVisible(false);
+			      }
+		      }
+		    }
+		    catch(SQLException e) {
+		      // if the error message is "out of memory", 
+		      // it probably means no database file is found
+		      System.err.println(e.getMessage());
+		    }
+		    finally {
+		      try {
+		        if(connection != null)
+		          connection.close();
+		      }
+		      catch(SQLException e) {
+		        // connection close failed.
+		        System.err.println(e);
+		      }
+		    }
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
 		}
 	}
 	
@@ -310,7 +350,7 @@ public class KeypadPanel extends JPanel{
 		      // create a database connection
 		      connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/contacts2.db");
 		      Statement statement = connection.createStatement();
-		      statement.setQueryTimeout(30);  // set timeout t0o 30 sec.
+		      statement.setQueryTimeout(30);  // set timeout to 30 sec.
 		      
 		      ResultSet rs = statement.executeQuery("select * from contact_entities_view where (display_name glob '*" + globAlphaTerm + "*' or data1 glob '*" + searchTerm + "*') and mimetype = 'vnd.android.cursor.item/phone_v2'");
 		      // put a for loop here that iterates for each search result panel available
@@ -320,6 +360,7 @@ public class KeypadPanel extends JPanel{
 			    	  contacts[i].setVisible(true);
 			    	  contacts[i].setName(rs.getString("display_name"));
 			    	  contacts[i].setNumber(rs.getString("data1"));
+			    	  contacts[i].setFav(false);
 			    	  
 			          System.out.println("name = " + rs.getString("display_name"));
 			          System.out.println("number = " + rs.getString("data1"));
@@ -347,6 +388,41 @@ public class KeypadPanel extends JPanel{
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	private String getFavoriteNumber(String name) {
+		String number = "";
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection connection = null;
+		    try {
+		      // create a database connection
+		      connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/contacts2.db");
+		      Statement statement = connection.createStatement();
+		      statement.setQueryTimeout(30);  // set timeout to 30 sec.
+		      
+		      ResultSet rs = statement.executeQuery("select * from contact_entities_view where display_name ='" + name + "' and mimetype = 'vnd.android.cursor.item/phone_v2'");
+		      number = rs.getString("data1");
+		    }
+		    catch(SQLException e) {
+		      // if the error message is "out of memory", 
+		      // it probably means no database file is found
+		      System.err.println(e.getMessage());
+		    }
+		    finally {
+		      try {
+		        if(connection != null)
+		          connection.close();
+		      }
+		      catch(SQLException e) {
+		        // connection close failed.
+		        System.err.println(e);
+		      }
+		    }
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		return number;
 	}
 
 }

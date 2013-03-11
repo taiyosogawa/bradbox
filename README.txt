@@ -9,25 +9,21 @@ Install Arduino driver (find in device manager, update drivers, have it search i
 
 
 
-(Maybe) 
 Install sqlite3 (.dll and .exe into Windows/System32)
-
-
-PHONE SPECIFIC
+sqlite3 favorites.db "create table names (name TEXT, rank INTEGER);"
+populate names with Favorite 1, Favorite 2, ... , Favorite 6.
 
 root the phone
+Make sure the function unlock() in JavaMonkey.java will unlock the phone
 
 We will copy the contacts database every time, because there is a timeout for broadcast intent receivers
 
 
-OPTION1 (pull database each time)
-do one time {
+
+every time a contact is edited {
 adb shell
 su (make sure the phone will accept)
 chmod 777 /data/data/com.android.providers.contacts/databases/contacts2.db
-}
-
-do every time a contact is added/edited/deleted {
 adb pull /data/data/com.android.providers.contacts/databases/contacts2.db
 }
 
@@ -37,11 +33,9 @@ select data1 from contact_entities_view where (display_name like 'taiyo%' or dat
 select data1 from contact_entities_view where (display_name glob '*[TtUuVv][AaBbCc][GgHhIi]*') or data1 glob '*425*' and mimetype = 'vnd.android.cursor.item/phone_v2');
 }
 
-OPTION2 (query within adb)
-Instal sqlight on phone via this app https://play.google.com/store/apps/details?id=ptSoft.util.sqlite3forroot&hl=en
-
-
-
 
 SMS
 db stored at data/data/com.android.providers.telephony/databases/mmssms.db
+
+ChimpChat Documentation at
+https://code.google.com/p/aster/source/browse/src/com/android/chimpchat/core/IChimpDevice.java?r=967f7f8cd6249c69e00c6de7ff1b55bd0f51d311
