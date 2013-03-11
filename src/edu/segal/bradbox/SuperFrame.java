@@ -1,14 +1,8 @@
 package edu.segal.bradbox;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.FlowLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -36,7 +30,6 @@ public class SuperFrame extends JFrame{
 		optionsPanel = new OptionsPanel(this);
 		editContactPanel = new EditContactPanel(this, "", "");
 	    initWindow();
-		initMenu();
 
 		
 		setSize(950, 550);
@@ -77,7 +70,7 @@ public class SuperFrame extends JFrame{
 	    this.serialio = s;
 	}
 	
-	private final void initWindow() {
+	private final void initWindow() { 
 		 // Initialize the UI look and feel
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -96,65 +89,8 @@ public class SuperFrame extends JFrame{
 	public final void showKeypad() {
 		setTitle("Keypad");
 		hidePanels();
-		monkey.shell("am start -a android.intent.action.DIAL");
 		keypadPanel.searchContacts();
 		keypadPanel.setVisible(true);
-	}
-
-	private final void initMenu() {
-		JToolBar toolbar = new JToolBar();
-
-		ImageIcon favoritesIcon = new ImageIcon(this.getClass().getResource("/img/Favorites1.png"));
-		ImageIcon keypadIcon = new ImageIcon(getClass().getResource("/img/Keypad1.png"));
-		ImageIcon textingIcon = new ImageIcon(getClass().getResource("/img/Texting1.png"));
-		
-		ImageIcon favoritesIcon2 = new ImageIcon(this.getClass().getResource("/img/Favorites2.png"));
-		ImageIcon keypadIcon2 = new ImageIcon(getClass().getResource("/img/Keypad2.png"));
-		ImageIcon textingIcon2 = new ImageIcon(getClass().getResource("/img/Texting2.png"));
-		
-		JToggleButton favoritesButton = new JToggleButton(favoritesIcon);
-		favoritesButton.setToolTipText("Favorites");
-		favoritesButton.setSelectedIcon(favoritesIcon2);
-		JToggleButton keypadButton = new JToggleButton(keypadIcon);
-		keypadButton.setToolTipText("Keypad");
-		keypadButton.setSelectedIcon(keypadIcon2);
-		JToggleButton textingButton = new JToggleButton(textingIcon);
-		textingButton.setToolTipText("SMS");
-		textingButton.setSelectedIcon(textingIcon2);
-		
-	    ButtonGroup group = new ButtonGroup();
-	    group.add(favoritesButton);
-	    group.add(keypadButton);
-	    group.add(textingButton);
-		
-	    favoritesButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				// Place keypad in the viewed area
-				hidePanels();
-				setTitle("Options");
-				optionsPanel.setVisible(true);
-			}
-		});
-	    
-		keypadButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				showKeypad();
-			}
-		});
-		
-		textingButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				setTitle("Texting");
-				hidePanels();
-				textingPanel.setVisible(true);
-			}
-		});
-		
-		toolbar.add(favoritesButton);
-		toolbar.add(keypadButton);
-		toolbar.add(textingButton);
-		
-		//add(toolbar, BorderLayout.NORTH);
 	}
 	
 	private final void hidePanels() {

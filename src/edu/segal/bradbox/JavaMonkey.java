@@ -54,6 +54,23 @@ public class JavaMonkey {
 	    }
     	mDevice.reboot(null);
     }
+    
+    
+    
+    public void unlock() {
+    	if ( mDevice == null ) {
+            throw new IllegalStateException("JavaMonkey is not initialized in JavaMonkey.");
+	    }
+    	mDevice.wake();
+    	mDevice.drag(120, 300, 120, 200, 1, 120);
+    }
+    
+    public void lock() {
+    	if ( mDevice == null ) {
+            throw new IllegalStateException("JavaMonkey is not initialized in JavaMonkey.");
+	    }
+    	mDevice.press("POWER", TouchPressType.DOWN_AND_UP);
+    }
 
     /**
      * Terminates this JavaMonkey.

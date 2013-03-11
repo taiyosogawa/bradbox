@@ -17,8 +17,10 @@ public class OptionsPanel extends JPanel{
 	JavaMonkey monkey;
 	Serialio serialio;
 	
+	String LOUDSPEAKER_ON = "Turn Loudspeaker On";
+	String LOUDSPEAKER_OFF = "Turn Loudspeaker Off";
 	// Loudspeaker control button
-	JButton loudspeakerButton = new JButton("Turn Loudspeaker On");
+	JButton loudspeakerButton = new JButton(LOUDSPEAKER_ON);
 	
 	// Navigation button
 	JButton homeButton = new JButton("Home");
@@ -36,12 +38,12 @@ public class OptionsPanel extends JPanel{
 		add(loudspeakerButton);
 		loudspeakerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				if(loudspeakerButton.getText() == "Turn Loudspeaker On") {
+				if(loudspeakerButton.getText() == LOUDSPEAKER_ON) {
 					serialio.LoudspeakerOn();
-					loudspeakerButton.setText("Turn Loudspeaker Off");
+					loudspeakerButton.setText(LOUDSPEAKER_OFF);
 				} else {
 					serialio.LoudspeakerOff();
-					loudspeakerButton.setText("Turn Loudspeaker On");
+					loudspeakerButton.setText(LOUDSPEAKER_ON);
 				}
 			}
 		});

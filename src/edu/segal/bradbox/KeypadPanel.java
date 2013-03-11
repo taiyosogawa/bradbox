@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -30,13 +29,12 @@ import javax.swing.event.DocumentListener;
 public class KeypadPanel extends JPanel{
 	SuperFrame superframe;
 	JavaMonkey monkey;
-	final static private String[] keypadLabels = {"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 1</font></b>\n<br>\n&nbsp;\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 2</font></b>\n<br>\nABC\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 3</font></b>\n<br>\nDEF\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 4</font></b>\n<br>\nGHI\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 5</font></b>\n<br>\nJKL\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 6</font></b>\n<br>\nMNO\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 7</font></b>\n<br>\nPQRS\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 8</font></b>\n<br>\nTUV\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 9</font></b>\n<br>\nWXYZ\n</p></html>", "*", "0", "#"};
+	final static private String[] keypadLabels = {"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 1</font></b>\n<br>\n&nbsp;\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 2</font></b>\n<br>\nABC\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 3</font></b>\n<br>\nDEF\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 4</font></b>\n<br>\nGHI\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 5</font></b>\n<br>\nJKL\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 6</font></b>\n<br>\nMNO\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 7</font></b>\n<br>\nPQRS\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 8</font></b>\n<br>\nTUV\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 9</font></b>\n<br>\nWXYZ\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> *</font></b>\n<br>\n&nbsp;\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 0</font></b>\n<br>\n&nbsp;\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> #</font></b>\n<br>\n&nbsp;\n</p></html>"};
 	final static private String[] numberStrings = {"", "", "[AaBbCc]", "[DdEeFf]", "[GgHhIi]", "[JjKkLl]", "[MmNnOo]", "[PpQqRrSs]", "[TtUuVv]", "[WwXxYyZz]"}; 
 	final static private Map<String, String> keyCodeMap = new HashMap<String, String>();
 	final static private Map<String, String> keyStringMap = new HashMap<String, String>();
-	final private JTextField numberField = new JTextField(12);
-	final private JLabel callingLabel = new JLabel();
-	JButton callButton = new JButton("Call");
+	final private JTextField numberField = new JTextField(9);
+	JButton callButton = new JButton(Constants.CALL_STRING);
 	private JPanel contactsPanel = new JPanel();
 	private ContactModule[] contacts = new ContactModule[6];
 	/**
@@ -80,12 +78,13 @@ public class KeypadPanel extends JPanel{
 		keyCodeMap.put("7", "KEYCODE_7");
 		keyCodeMap.put("8", "KEYCODE_8");
 		keyCodeMap.put("9", "KEYCODE_9");
-		keyCodeMap.put("#", "KEYCODE_POUND");
-		keyCodeMap.put("*", "KEYCODE_STAR");
+		keyCodeMap.put("#", "18");
+		keyCodeMap.put("*", "17");
 		keyCodeMap.put("Delete", "KEYCODE_DEL");
-		keyCodeMap.put("Call", "KEYCODE_CALL");
-		keyCodeMap.put("End Call", "KEYCODE_ENDCALL");
+		keyCodeMap.put(Constants.CALL_STRING, "KEYCODE_CALL");
+		keyCodeMap.put(Constants.END_CALL_STRING, "KEYCODE_ENDCALL");
 		
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 0</font></b>\n<br>\n&nbsp;\n</p></html>", "0");
 		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 1</font></b>\n<br>\n&nbsp;\n</p></html>", "1");
 		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 2</font></b>\n<br>\nABC\n</p></html>", "2");
 		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 3</font></b>\n<br>\nDEF\n</p></html>", "3");
@@ -95,6 +94,8 @@ public class KeypadPanel extends JPanel{
 		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 7</font></b>\n<br>\nPQRS\n</p></html>", "7");
 		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 8</font></b>\n<br>\nTUV\n</p></html>", "8");
 		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 9</font></b>\n<br>\nWXYZ\n</p></html>", "9");
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> *</font></b>\n<br>\n&nbsp;\n</p></html>", "*");
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> #</font></b>\n<br>\n&nbsp;\n</p></html>", "#");
 	}
 	
 	public void initKeypad(){	
@@ -111,7 +112,7 @@ public class KeypadPanel extends JPanel{
 		rightConstraints.fill = GridBagConstraints.HORIZONTAL;
 		rightConstraints.gridx = 2;
 		rightConstraints.gridy = 0;
-		rightConstraints.weightx = .3;
+		rightConstraints.weightx = .5;
 		rightConstraints.anchor = GridBagConstraints.PAGE_START;
 		
 		JPanel leftPanel = new JPanel();
@@ -166,20 +167,20 @@ public class KeypadPanel extends JPanel{
 		// Create all buttons with listeners attached
 		for(int i = 0; i < 12; i++){
 			JButton numberKey = new JButton(keypadLabels[i]);
-			numberKey.setFont(numberFont);
+			//numberKey.setFont(numberFont);
 			numberKey.setSize(WIDTH, HEIGHT);
 			numberKey.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					JButton clickedButton = (JButton) event.getSource();
-					numberField.setText(numberField.getText() + keyStringMap.get(clickedButton.getText()));
-					monkey.press(keyCodeMap.get(clickedButton.getText()));
+					String keyNumber = keyStringMap.get(clickedButton.getText());
+					numberField.setText(numberField.getText() + keyNumber);
+					if(callButton.getText().equals(Constants.END_CALL_STRING)) {
+						monkey.press(keyCodeMap.get(keyNumber));
+					}
 				}
 			});
 			keypad.add(numberKey);
 		}
-		
-		// Create a panel for the calling button
-		JPanel callingPanel = new JPanel();
 		
 		// Customize the calling panel font
 		Font callingFont = new Font("SansSerif", Font.BOLD, 20);
@@ -191,18 +192,14 @@ public class KeypadPanel extends JPanel{
 		
 		delButton.setFont(callingFont);
 		delButton.setBackground(Constants.RED);
-		
-		callingPanel.setLayout(new GridLayout(1,0));
-		
-		// Create a calling Label to display when a call is initiated
-		callingLabel.setFont(callingFont);		
+
 				
 		// Create a listener for the callButton
 		callButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				JButton callButton = (JButton) event.getSource();
-				if(callButton.getText().equals("Call")) {
-					initiateCall();
+				if(callButton.getText().equals(Constants.CALL_STRING)) {
+					initiateCall(numberField.getText());
 				} else {
 					endCall();
 				}
@@ -214,12 +211,23 @@ public class KeypadPanel extends JPanel{
 		
 		// Create options button
 		JButton optionsButton = new JButton("Options");
-		optionsButton.setPreferredSize(new Dimension(260,60));
+		optionsButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 60));
 		optionsButton.setFont(callingFont);
+		optionsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				superframe.showOptions();
+			}
+		});
 		
 		JButton callLogButton = new JButton("Call Log");
-		callLogButton.setPreferredSize(new Dimension(260,60));
+		callLogButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 60));
 		callLogButton.setFont(callingFont);
+		
+		callLogButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				monkey.unlock();
+			}
+		});
 		
 		for(int i = 0; i < contacts.length; i++) contacts[i] = new ContactModule(this, "", "");
 		initFavorites();
@@ -234,9 +242,7 @@ public class KeypadPanel extends JPanel{
 				numberFieldPanel.add(numberField);
 				numberFieldPanel.add(delButton);
 			leftPanel.add(keypad, BorderLayout.CENTER);
-			leftPanel.add(callingPanel, BorderLayout.PAGE_END);
-				callingPanel.add(callButton);
-				callingPanel.add(callingLabel);
+			leftPanel.add(callButton, BorderLayout.PAGE_END);
 		this.add(rightPanel, rightConstraints);
 			rightPanel.add(optionsPanel, BorderLayout.PAGE_START);
 				optionsPanel.add(optionsButton);
@@ -249,30 +255,20 @@ public class KeypadPanel extends JPanel{
 	}
 	
 	public void acceptButtonPush() {
-		if(callButton.getText().equals("Call")) initiateCall();
+		if(callButton.getText().equals(Constants.CALL_STRING)) initiateCall(numberField.getText());
 		else endCall();
 	}
 	
-	private void initiateCall() {
-		callButton.setText("End Call");
-		callButton.setBackground(Constants.RED);
-		String number = numberField.getText();
-		numberField.setText("");
-		callingLabel.setText("    Calling " + number + " . . .");
-		monkey.press("KEYCODE_CALL");	
-	}
-	
 	public void initiateCall(String number) {
-		if(callButton.getText().equals("Call")) {
-			callButton.setText("End Call");
+		monkey.shell("am start -a android.intent.action.DIAL");
+		if(callButton.getText().equals(Constants.CALL_STRING)) {
+			monkey.unlock();
+			callButton.setText(Constants.END_CALL_STRING);
 			callButton.setBackground(Constants.RED);
-			String oldText = numberField.getText();
-			numberField.setText("");
-			callingLabel.setText("    Calling " + number + " . . .");
-			System.out.println("old text: " + oldText.length());
-			for(int i = 0; i < oldText.length() + 10; i++) {
+			for(int i = 0; i < numberField.getText().length() + 10; i++) {
 				monkey.press("KEYCODE_DEL");
 			}
+			numberField.setText("");
 			for(int i = 0; i < number.length(); i++) {
 				monkey.press(keyCodeMap.get(number.substring(i, i + 1)));
 			}
@@ -281,20 +277,18 @@ public class KeypadPanel extends JPanel{
 	}
 	
 	private void endCall() {
-		callButton.setText("Call");
+		callButton.setText(Constants.CALL_STRING);
 		callButton.setBackground(Constants.GREEN);
 		numberField.setText("");
-		callingLabel.setText("");
 		monkey.press("KEYCODE_ENDCALL");
 	}
 	
 	public void initFavorites() {
-		contacts[0].setName("Mom");
-		contacts[0].setNumber("123");
-		contacts[1].setName("Dad");
-		contacts[1].setNumber("456");
-		contacts[2].setName("Deb");
-		contacts[2].setNumber("789");
+		for(int i = 0; i < 6; i++) {
+			contacts[i].setName("Favorite " + Integer.toString(i + 1));
+			contacts[i].setNumber("");
+			contacts[i].setVisible(true);
+		}
 	}
 	
 	public void searchContacts() {

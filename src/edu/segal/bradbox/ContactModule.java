@@ -2,7 +2,6 @@ package edu.segal.bradbox;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -35,13 +34,16 @@ public class ContactModule extends JPanel {
 		smsButton.setFont(buttonFont);
 		editButton.setFont(buttonFont);
 		
+		callButton.setPreferredSize(new Dimension(140, 50));
+		editButton.setPreferredSize(new Dimension(80, 50));
+		
 		// May need to initialize look and feel here
 		
 		JPanel namePane = new JPanel();
-		namePane.setPreferredSize(new Dimension(110, 40));
+		namePane.setPreferredSize(new Dimension(110, 50));
 		namePane.setLayout(new BoxLayout(namePane, BoxLayout.Y_AXIS));
 		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new GridLayout(1, 0));
+
 		nameLabel.setFont(labelFont);
 		numberLabel.setFont(labelFont);
 		namePane.add(nameLabel);
