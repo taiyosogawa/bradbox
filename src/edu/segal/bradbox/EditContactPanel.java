@@ -68,6 +68,15 @@ public class EditContactPanel extends JPanel{
 		
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				
+				SwingUtilities.invokeLater(new Runnable() {
+			        public void run() {
+			            ConfirmDeleteFrame cdf = new ConfirmDeleteFrame(superframe, oldName, fav, rank);
+			            cdf.setVisible(true);
+			        }
+				});
+				
+				/*
 				monkey.shell("am broadcast -a edu.segal.androidbradbox.deletecontact -e name '" + oldName + "'");
 				System.out.println("attempting to copy contacts");
 				try {
@@ -77,6 +86,7 @@ public class EditContactPanel extends JPanel{
 					e.printStackTrace();
 				}
 				superframe.showKeypad();
+				*/
 			}
 		});
 		

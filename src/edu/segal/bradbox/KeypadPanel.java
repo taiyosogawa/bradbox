@@ -34,7 +34,7 @@ public class KeypadPanel extends JPanel{
 	final static private Map<String, String> keyCodeMap = new HashMap<String, String>();
 	final static private Map<String, String> keyStringMap = new HashMap<String, String>();
 	final private JTextField numberField = new JTextField(9);
-	JButton callButton = new JButton(Constants.CALL_STRING);
+	JButton callButton;
 	private JPanel contactsPanel = new JPanel();
 	private ContactModule[] contacts = new ContactModule[6];
 	/**
@@ -99,6 +99,7 @@ public class KeypadPanel extends JPanel{
 	}
 	
 	public void initKeypad(){	
+		callButton = new JButton(Constants.CALL_STRING);
 		// Set the orientation of the keypad Panel
 		this.setLayout(new GridBagLayout());
 		this.setPreferredSize(new Dimension(900, 650));
@@ -207,11 +208,11 @@ public class KeypadPanel extends JPanel{
 		});
 		
 		JPanel optionsPanel = new JPanel();
-		optionsPanel.setLayout(new GridLayout(0, 1));
+		optionsPanel.setLayout(new GridLayout(1, 0));
 		
 		// Create options button
 		JButton optionsButton = new JButton("Options");
-		optionsButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 60));
+		optionsButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 85));
 		optionsButton.setFont(callingFont);
 		optionsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -220,7 +221,7 @@ public class KeypadPanel extends JPanel{
 		});
 		
 		JButton callLogButton = new JButton("Call Log");
-		callLogButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 60));
+		callLogButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 85));
 		callLogButton.setFont(callingFont);
 		
 		callLogButton.addActionListener(new ActionListener() {

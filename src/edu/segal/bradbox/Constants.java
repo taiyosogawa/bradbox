@@ -5,7 +5,7 @@ import java.awt.Color;
 public interface Constants {
 	public static final int WINDOW_WIDTH = 600;
 	public static final int WINDOW_HEIGHT = 600;
-	public static final int CONTACTS_WIDTH = 400;
+	public static final int CONTACTS_WIDTH = 190;
 	
 	public static final String CALL_STRING = "Call";
 	public static final String END_CALL_STRING = "End Call";

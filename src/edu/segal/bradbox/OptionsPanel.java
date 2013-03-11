@@ -1,12 +1,16 @@
 package edu.segal.bradbox;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class OptionsPanel extends JPanel{
 	/**
@@ -28,12 +32,13 @@ public class OptionsPanel extends JPanel{
 	// Add contact fields
 	JTextField nameField = new JTextField(30);
 	JTextField numberField = new JTextField(12);
-
+	JCheckBox favCheckbox = new JCheckBox("Add as favorite");
 	
 	OptionsPanel(SuperFrame sf) {
 		superframe = sf;
 		monkey = sf.monkey;
 		serialio = sf.serialio;
+		setLayout(new GridLayout(0, 1));
 		add(homeButton);
 		add(loudspeakerButton);
 		loudspeakerButton.addActionListener(new ActionListener() {
@@ -65,16 +70,14 @@ public class OptionsPanel extends JPanel{
 		add(numberLabel);
 		add(numberField);
 		
+		add(favCheckbox);
+		
 		JButton addButton = new JButton("Add Contact");
 		add(addButton);
 		
 		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				String name = nameField.getText();
-				nameField.setText("");
-				String number = numberField.getText();
-				numberField.setText("");
-				monkey.shell("am broadcast -a edu.segal.androidbradbox.addcontact -e name '" + name + "' -e number '"+ number + "'");
+			public void actionPerformed(ActionEvent event) {	
+				monkey.shell("am broadcast -a edu.segal.androidbradbox.addcontact -e name '" + nameField.getText() + "' -e number '"+ numberField.getText() + "'");
 				System.out.println("attempting to copy contacts");
 				try {
 					Runtime.getRuntime().exec("/platform-tools/copycontacts.exe");
@@ -89,6 +92,20 @@ public class OptionsPanel extends JPanel{
 				} catch (IOException e) {
 					System.out.println("Error: IOException when calling copycontacts.exe");
 					e.printStackTrace();
+				}
+				
+				if(favCheckbox.isSelected()) {
+					SwingUtilities.invokeLater(new Runnable() {
+				        public void run() {
+				            EditFavoriteFrame ff = new EditFavoriteFrame(superframe, nameField.getText());
+				            ff.setVisible(true);
+				            nameField.setText("");
+							numberField.setText("");
+				        }
+					});
+				} else {	
+					nameField.setText("");
+					numberField.setText("");
 				}
 			}
 		});

@@ -12,6 +12,7 @@ Install Arduino driver (find in device manager, update drivers, have it search i
 Install sqlite3 (.dll and .exe into Windows/System32)
 sqlite3 favorites.db "create table names (name TEXT, rank INTEGER);"
 populate names with Favorite 1, Favorite 2, ... , Favorite 6.
+insert into names (name, rank) values ('Favorite 1', 1);
 
 root the phone
 Make sure the function unlock() in JavaMonkey.java will unlock the phone

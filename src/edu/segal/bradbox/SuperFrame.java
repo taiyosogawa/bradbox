@@ -99,6 +99,10 @@ public class SuperFrame extends JFrame{
 		keypadPanel.setVisible(true);
 	}
 	
+	public JavaMonkey getMonkey() {
+		return monkey;
+	}
+	
 	private final void hidePanels() {
 		keypadPanel.setVisible(false);
 		textingPanel.setVisible(false);
