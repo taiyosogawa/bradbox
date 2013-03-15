@@ -36,6 +36,7 @@ public class ContactModule extends JPanel {
 		Font buttonFont = new Font("SansSerif", Font.PLAIN, 18);
 		Font labelFont = new Font("SansSerif", Font.PLAIN, 12);
 		callButton.setFont(buttonFont);
+		callButton.setBackground(Constants.BRAD_BLUE);
 		smsButton.setFont(buttonFont);
 		editButton.setFont(buttonFont);
 		

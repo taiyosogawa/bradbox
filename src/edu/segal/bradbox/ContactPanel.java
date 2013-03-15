@@ -22,6 +22,7 @@ public class ContactPanel extends PanelSkeleton {
 	JTextField numberField = new JTextField();
 	JButton saveButton = new JButton("Save");
 	JButton deleteButton = new JButton("Delete");
+	String newName;
 	String oldName;
 	boolean fav = false;
 	boolean editContact;
@@ -86,8 +87,9 @@ public class ContactPanel extends PanelSkeleton {
 		
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				newName = nameField.getText();
 				if(editContact) monkey.shell("am broadcast -a edu.segal.androidbradbox.deletecontact -e name '" + oldName + "'");
-				monkey.shell("am broadcast -a edu.segal.androidbradbox.addcontact -e name '" + nameField.getText() + "' -e number '"+ numberField.getText() + "'");
+				monkey.shell("am broadcast -a edu.segal.androidbradbox.addcontact -e name '" + newName + "' -e number '"+ numberField.getText() + "'");
 				System.out.println("attempting to copy contacts");
 				try {
 					Runtime.getRuntime().exec("/platform-tools/copycontacts.exe");
@@ -101,13 +103,14 @@ public class ContactPanel extends PanelSkeleton {
 				} else if(favCheckbox.isSelected()) {
 					SwingUtilities.invokeLater(new Runnable() {
 				        public void run() {
-				            EditFavoriteFrame ff = new EditFavoriteFrame(superframe, nameField.getText());
+				            EditFavoriteFrame ff = new EditFavoriteFrame(superframe, newName);
 				            ff.setVisible(true);
 				        }
 					});
 				}
 				nameField.setText("");
 				numberField.setText("");
+				favCheckbox.setSelected(false);
 				superframe.showKeypad();
 
 			}
