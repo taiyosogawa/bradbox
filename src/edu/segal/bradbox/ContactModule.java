@@ -32,26 +32,22 @@ public class ContactModule extends JPanel {
 		setNumber(no);
 		fav = f;
 		rank = r;
-		
-		Font buttonFont = new Font("SansSerif", Font.PLAIN, 18);
-		Font labelFont = new Font("SansSerif", Font.PLAIN, 12);
-		callButton.setFont(buttonFont);
+
+		callButton.setFont(Constants.FONT_18_PLAIN);
 		callButton.setBackground(Constants.BRAD_BLUE);
-		smsButton.setFont(buttonFont);
-		editButton.setFont(buttonFont);
+		smsButton.setFont(Constants.FONT_18_PLAIN);
+		editButton.setFont(Constants.FONT_18_PLAIN);
 		
 		callButton.setPreferredSize(new Dimension(140, 50));
 		editButton.setPreferredSize(new Dimension(80, 50));
-		
-		// May need to initialize look and feel here
 		
 		JPanel namePane = new JPanel();
 		namePane.setPreferredSize(new Dimension(110, 50));
 		namePane.setLayout(new BoxLayout(namePane, BoxLayout.Y_AXIS));
 		JPanel buttonPane = new JPanel();
 
-		nameLabel.setFont(labelFont);
-		numberLabel.setFont(labelFont);
+		nameLabel.setFont(Constants.FONT_14_PLAIN);
+		numberLabel.setFont(Constants.FONT_12_PLAIN);
 		namePane.add(nameLabel);
 		namePane.add(numberLabel);
 		
@@ -76,10 +72,12 @@ public class ContactModule extends JPanel {
 	
 	public void setName(String nm) {
 		nameLabel.setText(nm);
+		nameLabel.setToolTipText(nm);
 	}
 
 	public void setNumber(String no) {
 		numberLabel.setText(no);
+		numberLabel.setToolTipText(no);
 	}
 	
 	public void setFav(boolean f) {

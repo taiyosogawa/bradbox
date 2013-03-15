@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 
 public class EditFavoriteFrame extends JFrame{
 	SuperFrame superframe;
@@ -30,7 +31,10 @@ public class EditFavoriteFrame extends JFrame{
 		initWindow();
 		add(contentPanel);
 		contentPanel.setLayout(new GridLayout(0, 1));
-		contentPanel.add(new JLabel("Choose the favorite you would like to replace:"));
+		contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		JLabel promptLabel = new JLabel("Choose the favorite you would like to replace:");
+		promptLabel.setFont(Constants.FONT_18_PLAIN);
+		contentPanel.add(promptLabel);
 		
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -87,7 +91,7 @@ public class EditFavoriteFrame extends JFrame{
 		}
 		
 		setTitle("Edit Favorite");
-		setSize(300, 500);
+		setSize(400, 600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}

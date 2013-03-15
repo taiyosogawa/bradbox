@@ -43,7 +43,7 @@ public class SuperFrame extends JFrame{
 		layout.setVgap(0);
 		setLayout(layout);
 		add(displayedPanel, BorderLayout.CENTER);
-		keypadPanel.setBackground(Constants.GRAY);
+		keypadPanel.setBackground(Constants.BACKGROUND_GRAY);
 		displayedPanel.add(keypadPanel);
 		//displayedPanel.add(textingPanel);
 		displayedPanel.add(addContactPanel);

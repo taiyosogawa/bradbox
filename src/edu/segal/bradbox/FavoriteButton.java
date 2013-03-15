@@ -7,6 +7,7 @@ public class FavoriteButton extends JButton {
 
 	FavoriteButton(String text, String r) {
 		setText(text);
+		setFont(Constants.FONT_26_PLAIN);
 		rank = r;
 	}
 	

@@ -25,7 +25,7 @@ public class PanelSkeleton extends JPanel {
 		serialio = superframe.getSerialio();
 		
 		setLayout(new BorderLayout());
-		setBackground(Constants.GRAY);
+		setBackground(Constants.BACKGROUND_GRAY);
 		setPreferredSize(new Dimension(900, 650));
 		
 		ImageIcon homeIcon = new ImageIcon(this.getClass().getResource("/img/bradbox_logo.png"));
@@ -40,7 +40,7 @@ public class PanelSkeleton extends JPanel {
 	
 		JLabel titleLabel = new JLabel(title);
 		titleLabel.setBorder(new EmptyBorder(0, 25, 0, 0));
-		titleLabel.setFont(Constants.BIG_FONT);
+		titleLabel.setFont(Constants.FONT_40_BOLD);
 		JPanel titlePanel = new JPanel();
 		titlePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		titlePanel.setLayout(new BorderLayout());

@@ -1,5 +1,6 @@
 package edu.segal.bradbox;
 
+import java.awt.GridLayout;
 import java.io.IOException;
 
 import javax.swing.JPanel;
@@ -13,7 +14,14 @@ public class CallLogPanel extends PanelSkeleton {
 
 	CallLogPanel (SuperFrame sf) {
 		super(sf, "Call Log");
-		//updateCallLogDB();
+		updateCallLogDB();
+		
+		JPanel content = new JPanel();
+		content.setLayout(new GridLayout(0, 1));
+		addContent(content);
+		
+		CallRecordModule testRecord = new CallRecordModule(superframe, "frank", "4252758461", "3:00pm");
+		content.add(testRecord);
 		
 	}
 	

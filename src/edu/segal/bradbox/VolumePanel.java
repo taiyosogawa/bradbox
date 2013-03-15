@@ -1,18 +1,24 @@
 package edu.segal.bradbox;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
 
 public class VolumePanel extends PanelSkeleton {
 	JPanel addContactPanel = new JPanel();	
@@ -22,18 +28,49 @@ public class VolumePanel extends PanelSkeleton {
 	String LOUDSPEAKER_OFF = "Turn Loudspeaker Off";
 	// Loudspeaker control button
 	JButton loudspeakerButton = new JButton(LOUDSPEAKER_ON);
-	JButton ringerButton = new JButton("Silence Ringer");
+	JButton muteButton = new JButton("Mute");
+	JButton fullVolumeButton = new JButton("Full Volume");
+	
 
 	
 	VolumePanel(SuperFrame sf) {
 		super(sf, "Volume Options");
 		
 		JPanel content = new JPanel();
-		content.setLayout(new GridLayout(0, 1));
+		content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
 		addContent(content);
-		content.add(loudspeakerButton);
-		content.add(ringerButton);
+		
+		JPanel loudspeakerPanel = new JPanel();
+		loudspeakerPanel.setLayout(new BorderLayout());
+		loudspeakerPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(Constants.DARK_GRAY), 
+				BorderFactory.createEmptyBorder(15, 15, 15, 15)), "Loudspeaker", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.ABOVE_TOP, Constants.FONT_18_PLAIN));
+		loudspeakerButton.setPreferredSize(new Dimension(400, 100));
+		
+		
+		JPanel phonePanel = new JPanel(new GridLayout(2, 2));
+		phonePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(Constants.DARK_GRAY), 
+				BorderFactory.createEmptyBorder(15, 15, 15, 15)), "Phone Ringer Volume", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.ABOVE_TOP, Constants.FONT_18_PLAIN));
+		
+		//JPanel volumePanel = new JPanel(new GridLayout(2, 2));
+		ImageIcon upIcon = new ImageIcon(this.getClass().getResource("/img/up_arrow.png"));
+		ImageIcon downIcon = new ImageIcon(this.getClass().getResource("/img/down_arrow.png"));
+		JButton upButton = new JButton(upIcon);
+		JButton downButton = new JButton(downIcon);
+		
+		muteButton.setFont(Constants.FONT_26_PLAIN);
+		fullVolumeButton.setFont(Constants.FONT_26_PLAIN);
+		
+		content.add(loudspeakerPanel);
+			loudspeakerPanel.add(loudspeakerButton, BorderLayout.CENTER);
+		content.add(Box.createVerticalStrut(40));
+		content.add(phonePanel);
+			phonePanel.add(upButton);
+			phonePanel.add(fullVolumeButton);
+			phonePanel.add(downButton);
+			phonePanel.add(muteButton);
 
 		loudspeakerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -46,16 +83,39 @@ public class VolumePanel extends PanelSkeleton {
 				}
 			}
 		});
-		loudspeakerButton.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+		loudspeakerButton.setFont(Constants.FONT_26_PLAIN);
 		
-		
-		ringerButton.addActionListener(new ActionListener() {
+		muteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				
+				monkey.unlock();
+				for(int i = 0; i < 10; i++) {
+					monkey.press("KEYCODE_VOLUME_DOWN");
+				}
 			}
 		});
-		ringerButton.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
 		
+		fullVolumeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				monkey.unlock();
+				for(int i = 0; i < 10; i++) {
+					monkey.press("KEYCODE_VOLUME_UP");
+				}
+			}
+		});
+		
+		upButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				monkey.unlock();
+				monkey.press("KEYCODE_VOLUME_UP");
+			}
+		});
+		
+		downButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				monkey.unlock();
+				monkey.press("KEYCODE_VOLUME_DOWN");
+			}
+		});
 	}
 }
 

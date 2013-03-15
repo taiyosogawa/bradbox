@@ -15,11 +15,11 @@ import javax.swing.SwingUtilities;
 public class ContactPanel extends PanelSkeleton {
 	private static final long serialVersionUID = 1L;
 	// Add contact fields
-	JCheckBox favCheckbox = new JCheckBox("Add as favorite");
+	JCheckBox favCheckbox = new JCheckBox("Add as Favorite");
 	JLabel nameLabel = new JLabel("Full Name");
-	JTextField nameField = new JTextField();
+	JTextField nameField = new JTextField(10);
 	JLabel phoneNumberLabel = new JLabel("Phone Number");
-	JTextField numberField = new JTextField();
+	JTextField numberField = new JTextField(10);
 	JButton saveButton = new JButton("Save");
 	JButton deleteButton = new JButton("Delete");
 	String newName;
@@ -77,13 +77,13 @@ public class ContactPanel extends PanelSkeleton {
 		} else {
 			content.add(saveButton);
 		}
-		nameLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 26));
-		nameField.setFont(Constants.BIG_FONT);
-		nameField.setColumns(10);
-		phoneNumberLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 26));
-		numberField.setFont(new Font("Lucida Grande", Font.PLAIN, 32));
-		numberField.setColumns(10);
-		saveButton.setFont(new Font("Lucida Grande", Font.BOLD, 28));
+		nameLabel.setFont(Constants.FONT_26_BOLD);
+		nameField.setFont(Constants.FONT_26_PLAIN);
+		phoneNumberLabel.setFont(Constants.FONT_26_BOLD);
+		numberField.setFont(Constants.FONT_26_PLAIN);
+		favCheckbox.setFont(Constants.FONT_26_BOLD);
+		deleteButton.setFont(Constants.FONT_26_BOLD);
+		saveButton.setFont(Constants.FONT_26_BOLD);
 		
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {

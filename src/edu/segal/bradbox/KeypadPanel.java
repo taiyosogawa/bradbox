@@ -140,11 +140,11 @@ public class KeypadPanel extends JPanel{
         });
 		
 		// Customize the text field font
-		numberField.setFont(Constants.BIG_FONT);
+		numberField.setFont(Constants.FONT_40_BOLD);
 		
 		// Create backspace button
 		JButton delButton = new JButton("Backspace");
-		delButton.setPreferredSize(new Dimension(150,80));
+		delButton.setPreferredSize(new Dimension(150, 80));
 				
 		// Create a listener for the backspace button
 		delButton.addActionListener(new ActionListener() {
@@ -183,14 +183,14 @@ public class KeypadPanel extends JPanel{
 		}
 		
 		// Customize the calling panel font
-		Font callingFont = new Font("SansSerif", Font.BOLD, 20);
+
 		
 		// Create a call button
-		callButton.setFont(Constants.BIG_FONT);
-		callButton.setBackground(Constants.GREEN);
+		callButton.setFont(Constants.FONT_40_BOLD);
+		callButton.setBackground(Constants.BRAD_BLUE);
 		callButton.setPreferredSize(new Dimension(250, 80));
 		
-		delButton.setFont(callingFont);
+		delButton.setFont(Constants.FONT_20_BOLD);
 		delButton.setBackground(Constants.RED);
 
 				
@@ -212,7 +212,7 @@ public class KeypadPanel extends JPanel{
 		// Create options button
 		JButton addContactButton = new JButton("Add Contact");
 		addContactButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 80));
-		addContactButton.setFont(callingFont);
+		addContactButton.setFont(Constants.FONT_20_BOLD);
 		addContactButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				superframe.showAddContact();
@@ -221,7 +221,7 @@ public class KeypadPanel extends JPanel{
 		
 		JButton callLogButton = new JButton("Call Log");
 		callLogButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 80));
-		callLogButton.setFont(callingFont);
+		callLogButton.setFont(Constants.FONT_20_BOLD);
 		
 		callLogButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -231,7 +231,7 @@ public class KeypadPanel extends JPanel{
 		
 		JButton volumeButton = new JButton("Volume Options");
 		volumeButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 80));
-		volumeButton.setFont(callingFont);
+		volumeButton.setFont(Constants.FONT_20_BOLD);
 		
 		volumeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -247,7 +247,7 @@ public class KeypadPanel extends JPanel{
 		}
 		
 		rightPanel.setBorder(new EmptyBorder(4, 0, 0, 0));
-		contactsPanel.setBackground(Constants.GRAY);
+		contactsPanel.setBackground(Constants.BACKGROUND_GRAY);
 		
 		JPanel contactsPanelContainer = new JPanel();
 		contactsPanelContainer.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 436));
@@ -282,9 +282,9 @@ public class KeypadPanel extends JPanel{
 	}
 	
 	public void initiateCall(String number) {
-		monkey.shell("am start -a android.intent.action.DIAL");
 		if(callButton.getText().equals(Constants.CALL_STRING)) {
 			monkey.unlock();
+			monkey.shell("am start -a android.intent.action.DIAL");
 			callButton.setText(Constants.END_CALL_STRING);
 			callButton.setBackground(Constants.RED);
 			for(int i = 0; i < numberField.getText().length() + 10; i++) {
@@ -300,7 +300,7 @@ public class KeypadPanel extends JPanel{
 	
 	private void endCall() {
 		callButton.setText(Constants.CALL_STRING);
-		callButton.setBackground(Constants.GREEN);
+		callButton.setBackground(Constants.BRAD_BLUE);
 		numberField.setText("");
 		monkey.press("KEYCODE_ENDCALL");
 	}

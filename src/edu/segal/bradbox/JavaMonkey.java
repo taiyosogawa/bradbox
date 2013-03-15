@@ -62,6 +62,11 @@ public class JavaMonkey {
             throw new IllegalStateException("JavaMonkey is not initialized in JavaMonkey.");
 	    }
     	mDevice.wake();
+    	try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
     	mDevice.drag(120, 300, 120, 200, 1, 120);
     }
     
