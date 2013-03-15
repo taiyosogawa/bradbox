@@ -15,8 +15,7 @@ public class ContactModule extends JPanel {
 	 * Required for JPanel
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	KeypadPanel keypad;
+	SuperFrame superframe;
 	JLabel nameLabel = new JLabel();
 	JLabel numberLabel = new JLabel();
 	JButton callButton = new JButton("Call");
@@ -24,9 +23,11 @@ public class ContactModule extends JPanel {
 	JButton editButton = new JButton("Edit");
 	boolean fav;
 	int rank;
+	String name;
+	String number;
 
-	ContactModule(KeypadPanel k, String nm, String no, boolean f, int r) {
-		keypad = k;
+	ContactModule(SuperFrame sf, String nm, String no, boolean f, int r) {
+		superframe = sf;
 		setName(nm);
 		setNumber(no);
 		fav = f;
@@ -61,13 +62,13 @@ public class ContactModule extends JPanel {
 		
 		callButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				keypad.initiateCall(numberLabel.getText());
+				superframe.getKeypad().initiateCall(numberLabel.getText());
 			}
 		});
 		
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				keypad.openEditContact(nameLabel.getText(), numberLabel.getText(), fav, rank);
+				superframe.openEditContact(nameLabel.getText(), numberLabel.getText(), fav, rank);
 			}
 		});
 	}

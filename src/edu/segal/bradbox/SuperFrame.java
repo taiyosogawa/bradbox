@@ -1,8 +1,10 @@
 package edu.segal.bradbox;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -17,9 +19,11 @@ public class SuperFrame extends JFrame{
 	public JavaMonkey monkey;
 	public Serialio serialio;
 	public KeypadPanel keypadPanel;
-	public TextingPanel textingPanel;
-	public OptionsPanel optionsPanel;
-	public EditContactPanel editContactPanel;
+	//public TextingPanel textingPanel;
+	public ContactPanel addContactPanel;
+	public ContactPanel editContactPanel;
+	public CallLogPanel callLogPanel;
+	public VolumePanel volumePanel;
 	JPanel displayedPanel = new JPanel();
 
 	/**
@@ -30,10 +34,7 @@ public class SuperFrame extends JFrame{
 	// Constructor function
 	public SuperFrame(JavaMonkey m, Serialio s) {
 		initIO(m, s);
-		keypadPanel = new KeypadPanel(this);
-		textingPanel = new TextingPanel(monkey);
-		optionsPanel = new OptionsPanel(this);
-		editContactPanel = new EditContactPanel(this, "", "", false, 0);
+		initPanels();
 	    initWindow();
 
 		
@@ -44,8 +45,10 @@ public class SuperFrame extends JFrame{
 		add(displayedPanel, BorderLayout.CENTER);
 		keypadPanel.setBackground(Constants.GRAY);
 		displayedPanel.add(keypadPanel);
-		displayedPanel.add(textingPanel);
-		displayedPanel.add(optionsPanel);		
+		//displayedPanel.add(textingPanel);
+		displayedPanel.add(addContactPanel);
+		displayedPanel.add(volumePanel);
+		displayedPanel.add(callLogPanel);
 		displayedPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		((FlowLayout)displayedPanel.getLayout()).setVgap(0);
 		((FlowLayout)displayedPanel.getLayout()).setHgap(0);
@@ -56,7 +59,7 @@ public class SuperFrame extends JFrame{
 	}
 	
 	public final void openEditContact(String nm, String no, boolean fav, int r) {
-		editContactPanel = new EditContactPanel(this, nm, no, fav, r);
+		editContactPanel = new ContactPanel(this, nm, no, fav, r);
 		displayedPanel.add(editContactPanel);
 		hidePanels();
 		setTitle("Edit Contact " + nm);
@@ -75,6 +78,15 @@ public class SuperFrame extends JFrame{
 	    this.serialio = s;
 	}
 	
+	private final void initPanels() {
+		keypadPanel = new KeypadPanel(this);
+		//textingPanel = new TextingPanel(monkey);
+		addContactPanel = new ContactPanel(this);
+		editContactPanel = new ContactPanel(this, "", "", false, 0);
+		volumePanel = new VolumePanel(this);
+		callLogPanel = new CallLogPanel(this);
+	}
+	
 	private final void initWindow() { 
 		 // Initialize the UI look and feel
 		try {
@@ -91,52 +103,83 @@ public class SuperFrame extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	public final void showKeypad() {
-		setTitle("Keypad");
-		hidePanels();
-		keypadPanel.clearField();
-		keypadPanel.searchContacts();
-		keypadPanel.setVisible(true);
+
+	public final JavaMonkey getMonkey() {
+		return monkey;
 	}
 	
-	public JavaMonkey getMonkey() {
-		return monkey;
+	public final KeypadPanel getKeypad() {
+		return keypadPanel;
+	}
+	
+	public final Serialio getSerialio() {
+		return serialio;
 	}
 	
 	private final void hidePanels() {
 		keypadPanel.setVisible(false);
-		textingPanel.setVisible(false);
-		optionsPanel.setVisible(false);
+		//textingPanel.setVisible(false);
+		addContactPanel.setVisible(false);
 		editContactPanel.setVisible(false);
+		volumePanel.setVisible(false);
+		callLogPanel.setVisible(false);
 	}
 	
-	public final void showOptions() {
+	public final void showAddContact() {
 		hidePanels();
-		setTitle("Options");
-		optionsPanel.setVisible(true);
+		setTitle("Add Contact");
+		addContactPanel.setVisible(true);
 	}
+	
+	public final void showVolume() {
+		hidePanels();
+		setTitle("Volume Options");
+		volumePanel.setVisible(true);
+	}
+	
+	public final void showKeypad() {
+		hidePanels();
+		setTitle("Keypad");
+		keypadPanel.clearField();
+		keypadPanel.refreshContactList();
+		keypadPanel.setVisible(true);
+	}
+	
+	public final void showCallLog() {
+		hidePanels();
+		setTitle("Call Log");
+		callLogPanel.setVisible(true);
+		
+	}
+	
 	
 	public final void updateFavorite(String newName, String rank) {
 		String queryString = "update names set name = '" + newName +"' where rank = " + rank;
-
+		updateDatabase("favorites.db", queryString);
+	}
+	
+	
+	public void updateDatabase(String db, String queryString) {
 		System.out.println("update string: " + queryString);
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection connection = null;
 			try {
 			  // create a database connection
-			  connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/favorites.db");
+			  connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/" + db);
 			  Statement statement = connection.createStatement();
 			  statement.setQueryTimeout(30);  // set timeout to 30 sec.
 			  statement.executeUpdate(queryString);
-			  Thread.sleep(250);
+			  Thread.sleep(350);
 			  showKeypad();
 
 			}
-		catch(SQLException | InterruptedException e) {
+		catch(SQLException e) {
 		  // if the error message is "out of memory", 
 		  // it probably means no database file is found
 		  System.err.println(e.getMessage());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		finally {
 		  try {

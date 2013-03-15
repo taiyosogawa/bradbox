@@ -58,12 +58,12 @@ public class ConfirmDeleteFrame extends JFrame{
 					System.out.println("Error: IOException when calling copycontacts.exe");
 					e.printStackTrace();
 				}
-				superframe.updateFavorite("Favorite " + Integer.toString(rank), Integer.toString(rank));
+				if(fav) {
+					superframe.updateFavorite("Favorite " + Integer.toString(rank), Integer.toString(rank));
+				}
 				frame.dispose();
 			}
 		});
-		
-		
 	}
 	
 	private final void initWindow() { 

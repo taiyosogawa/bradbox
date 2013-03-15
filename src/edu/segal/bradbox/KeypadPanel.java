@@ -131,21 +131,20 @@ public class KeypadPanel extends JPanel{
             }
             
             public void insertUpdate(DocumentEvent arg0) {
-                searchContacts();
+                refreshContactList();
             }
 
             public void removeUpdate(DocumentEvent arg0) {
-                searchContacts();
+                refreshContactList();
             }
         });
 		
 		// Customize the text field font
-		Font numberFont = new Font("SansSerif", Font.BOLD, 40);
-		numberField.setFont(numberFont);
+		numberField.setFont(Constants.BIG_FONT);
 		
 		// Create backspace button
 		JButton delButton = new JButton("Backspace");
-		delButton.setPreferredSize(new Dimension(150,60));
+		delButton.setPreferredSize(new Dimension(150,80));
 				
 		// Create a listener for the backspace button
 		delButton.addActionListener(new ActionListener() {
@@ -168,7 +167,7 @@ public class KeypadPanel extends JPanel{
 		// Create all buttons with listeners attached
 		for(int i = 0; i < 12; i++){
 			JButton numberKey = new JButton(keypadLabels[i]);
-			//numberKey.setFont(numberFont);
+			//numberKey.setFont(constants.BIG_FONT);
 			numberKey.setSize(WIDTH, HEIGHT);
 			numberKey.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
@@ -187,7 +186,7 @@ public class KeypadPanel extends JPanel{
 		Font callingFont = new Font("SansSerif", Font.BOLD, 20);
 		
 		// Create a call button
-		callButton.setFont(numberFont);
+		callButton.setFont(Constants.BIG_FONT);
 		callButton.setBackground(Constants.GREEN);
 		callButton.setPreferredSize(new Dimension(250, 80));
 		
@@ -211,32 +210,47 @@ public class KeypadPanel extends JPanel{
 		optionsPanel.setLayout(new GridLayout(1, 0));
 		
 		// Create options button
-		JButton optionsButton = new JButton("Options");
-		optionsButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 85));
-		optionsButton.setFont(callingFont);
-		optionsButton.addActionListener(new ActionListener() {
+		JButton addContactButton = new JButton("Add Contact");
+		addContactButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 80));
+		addContactButton.setFont(callingFont);
+		addContactButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				superframe.showOptions();
+				superframe.showAddContact();
 			}
 		});
 		
 		JButton callLogButton = new JButton("Call Log");
-		callLogButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 85));
+		callLogButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 80));
 		callLogButton.setFont(callingFont);
 		
 		callLogButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				monkey.unlock();
+				superframe.showCallLog();
 			}
 		});
 		
-		for(int i = 0; i < contacts.length; i++) contacts[i] = new ContactModule(this, "", "", false, i + 1);
+		JButton volumeButton = new JButton("Volume Options");
+		volumeButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 80));
+		volumeButton.setFont(callingFont);
+		
+		volumeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				superframe.showVolume();
+			}
+		});
+		
+		for(int i = 0; i < contacts.length; i++) contacts[i] = new ContactModule(superframe, "", "", false, i + 1);
 		initFavorites();
 		contactsPanel.setLayout(new BoxLayout(contactsPanel, BoxLayout.Y_AXIS));
 		for(int i = 0; i < contacts.length; i++) {
 			contactsPanel.add(contacts[i]);
 		}
 		
+		rightPanel.setBorder(new EmptyBorder(4, 0, 0, 0));
+		contactsPanel.setBackground(Constants.GRAY);
+		
+		JPanel contactsPanelContainer = new JPanel();
+		contactsPanelContainer.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 436));
 		// Arrange all the panels
 		this.add(leftPanel, leftConstraints);
 			leftPanel.add(numberFieldPanel, BorderLayout.PAGE_START);
@@ -245,10 +259,13 @@ public class KeypadPanel extends JPanel{
 			leftPanel.add(keypad, BorderLayout.CENTER);
 			leftPanel.add(callButton, BorderLayout.PAGE_END);
 		this.add(rightPanel, rightConstraints);
-			rightPanel.add(optionsPanel, BorderLayout.PAGE_START);
-				optionsPanel.add(optionsButton);
-				optionsPanel.add(callLogButton);
-			rightPanel.add(contactsPanel, BorderLayout.CENTER);
+			rightPanel.add(callLogButton, BorderLayout.PAGE_START);
+			rightPanel.add(contactsPanelContainer, BorderLayout.CENTER);
+				contactsPanelContainer.add(contactsPanel);
+			rightPanel.add(optionsPanel, BorderLayout.PAGE_END);
+				optionsPanel.add(addContactButton);
+				optionsPanel.add(volumeButton);
+			
 	}
 	
 	public void openEditContact(String nm, String no, boolean fav, int r) {
@@ -304,7 +321,7 @@ public class KeypadPanel extends JPanel{
 			          // read the result set
 			    	  contacts[i].setVisible(true);
 			    	  contacts[i].setName(rs.getString("name"));
-			    	  contacts[i].setNumber(getFavoriteNumber(rs.getString("name")));
+			    	  contacts[i].setNumber(getNumberbyName(rs.getString("name")));
 			    	  contacts[i].setFav(true);
 			      }
 			      else {
@@ -332,7 +349,7 @@ public class KeypadPanel extends JPanel{
 		}
 	}
 	
-	public void searchContacts() {
+	public void refreshContactList() {
 		String searchTerm = numberField.getText();
 		if (searchTerm.equals("")) {
 			initFavorites();
@@ -391,7 +408,7 @@ public class KeypadPanel extends JPanel{
 		}
 	}
 	
-	private String getFavoriteNumber(String name) {
+	private String getNumberbyName(String name) {
 		String number = "";
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -401,7 +418,7 @@ public class KeypadPanel extends JPanel{
 		      connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/contacts2.db");
 		      Statement statement = connection.createStatement();
 		      statement.setQueryTimeout(30);  // set timeout to 30 sec.
-		      
+
 		      ResultSet rs = statement.executeQuery("select * from contact_entities_view where display_name ='" + name + "' and mimetype = 'vnd.android.cursor.item/phone_v2'");
 		      number = rs.getString("data1");
 		    }
@@ -425,5 +442,4 @@ public class KeypadPanel extends JPanel{
 		}
 		return number;
 	}
-
 }

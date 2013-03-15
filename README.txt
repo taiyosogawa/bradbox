@@ -19,8 +19,6 @@ Make sure the function unlock() in JavaMonkey.java will unlock the phone
 
 We will copy the contacts database every time, because there is a timeout for broadcast intent receivers
 
-
-
 every time a contact is edited {
 adb shell
 su (make sure the phone will accept)
@@ -33,6 +31,10 @@ sqlite3 contacts2.db
 select data1 from contact_entities_view where (display_name like 'taiyo%' or data1 like '425%') and mimetype = 'vnd.android.cursor.item/phone_v2';
 select data1 from contact_entities_view where (display_name glob '*[TtUuVv][AaBbCc][GgHhIi]*') or data1 glob '*425*' and mimetype = 'vnd.android.cursor.item/phone_v2');
 }
+
+CAL LOG
+db stored at /data/data/com.sec.android.provider.logsprovider/databases/logs.db
+
 
 
 SMS
