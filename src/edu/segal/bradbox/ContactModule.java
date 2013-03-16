@@ -34,7 +34,7 @@ public class ContactModule extends JPanel {
 		rank = r;
 
 		callButton.setFont(Constants.FONT_18_PLAIN);
-		callButton.setBackground(Constants.BRAD_BLUE);
+		callButton.setBackground(Constants.GREEN);
 		smsButton.setFont(Constants.FONT_18_PLAIN);
 		editButton.setFont(Constants.FONT_18_PLAIN);
 		
@@ -76,8 +76,9 @@ public class ContactModule extends JPanel {
 	}
 
 	public void setNumber(String no) {
-		numberLabel.setText(no);
-		numberLabel.setToolTipText(no);
+		String number = superframe.prettifyNumber(no);
+		numberLabel.setText(number);
+		numberLabel.setToolTipText(number);
 	}
 	
 	public void setFav(boolean f) {

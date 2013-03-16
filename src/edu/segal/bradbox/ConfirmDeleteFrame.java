@@ -51,13 +51,8 @@ public class ConfirmDeleteFrame extends JFrame{
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				monkey.shell("am broadcast -a edu.segal.androidbradbox.deletecontact -e name '" + name + "'");
-				System.out.println("attempting to copy contacts");
-				try {
-					Runtime.getRuntime().exec("/platform-tools/copycontacts.exe");
-				} catch (IOException e) {
-					System.out.println("Error: IOException when calling copycontacts.exe");
-					e.printStackTrace();
-				}
+				superframe.runExecutable("/platform-tools/copycontacts.exe");
+				
 				if(fav) {
 					superframe.updateFavorite("Favorite " + Integer.toString(rank), Integer.toString(rank));
 				}

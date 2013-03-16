@@ -2,6 +2,7 @@ package edu.segal.bradbox;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -148,6 +149,7 @@ public class SuperFrame extends JFrame{
 	public final void showCallLog() {
 		hidePanels();
 		setTitle("Call Log");
+		callLogPanel.updateCallLog();
 		callLogPanel.setVisible(true);
 		
 	}
@@ -170,7 +172,6 @@ public class SuperFrame extends JFrame{
 			  Statement statement = connection.createStatement();
 			  statement.setQueryTimeout(30);  // set timeout to 30 sec.
 			  statement.executeUpdate(queryString);
-			  Thread.sleep(350);
 			  showKeypad();
 
 			}
@@ -178,8 +179,6 @@ public class SuperFrame extends JFrame{
 		  // if the error message is "out of memory", 
 		  // it probably means no database file is found
 		  System.err.println(e.getMessage());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 		finally {
 		  try {
@@ -194,5 +193,40 @@ public class SuperFrame extends JFrame{
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	public void runExecutable(String path) {
+		System.out.println("attempting to run " + path);
+		try {
+			Process proc = Runtime.getRuntime().exec(path);
+			try {
+				proc.waitFor();
+				proc.destroy();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+		} catch (IOException e) {
+			System.out.println("Error: IOException when calling " + path);
+			e.printStackTrace();
+		}
+	}
+	
+	public String prettifyNumber(String number) {
+		int len = number.length();
+		if(len == 0) return "";
+		String out = "(";
+		out = out + number.substring(0, Math.min(3, len));
+		if(len >=3) out = out + ") ";
+		if (len <= 3) return out;
+		out = out + number.substring(3, Math.min(6, len));
+		if (len <= 6) return out;
+		out = out + "-" + number.substring(6, len);
+		return out;
+	}
+	
+	public String uglifyNumber(String number) {
+		System.out.println("uglified: " + number.replaceAll( "[^\\d]", "" ));
+		return number.replaceAll( "[^\\d]", "" );
 	}
 }

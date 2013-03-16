@@ -150,10 +150,10 @@ public class KeypadPanel extends JPanel{
 		delButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				monkey.press("KEYCODE_DEL");	
-				String number = numberField.getText();
+				String number = superframe.uglifyNumber(numberField.getText());
 				if(number.length() > 0) {
 					number = number.substring(0, number.length() - 1);
-					numberField.setText(number);
+					numberField.setText(superframe.prettifyNumber(number));
 				}
 			}
 		});
@@ -173,7 +173,7 @@ public class KeypadPanel extends JPanel{
 				public void actionPerformed(ActionEvent event) {
 					JButton clickedButton = (JButton) event.getSource();
 					String keyNumber = keyStringMap.get(clickedButton.getText());
-					numberField.setText(numberField.getText() + keyNumber);
+					numberField.setText(superframe.prettifyNumber(superframe.uglifyNumber(numberField.getText()) + keyNumber));
 					if(callButton.getText().equals(Constants.END_CALL_STRING)) {
 						monkey.press(keyCodeMap.get(keyNumber));
 					}
@@ -187,11 +187,11 @@ public class KeypadPanel extends JPanel{
 		
 		// Create a call button
 		callButton.setFont(Constants.FONT_40_BOLD);
-		callButton.setBackground(Constants.BRAD_BLUE);
+		callButton.setBackground(Constants.GREEN);
 		callButton.setPreferredSize(new Dimension(250, 80));
 		
 		delButton.setFont(Constants.FONT_20_BOLD);
-		delButton.setBackground(Constants.RED);
+		//delButton.setBackground(Constants.RED);
 
 				
 		// Create a listener for the callButton
@@ -199,7 +199,7 @@ public class KeypadPanel extends JPanel{
 			public void actionPerformed(ActionEvent event) {
 				JButton callButton = (JButton) event.getSource();
 				if(callButton.getText().equals(Constants.CALL_STRING)) {
-					initiateCall(numberField.getText());
+					initiateCall(superframe.uglifyNumber(numberField.getText()));
 				} else {
 					endCall();
 				}
@@ -222,7 +222,6 @@ public class KeypadPanel extends JPanel{
 		JButton callLogButton = new JButton("Call Log");
 		callLogButton.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 80));
 		callLogButton.setFont(Constants.FONT_20_BOLD);
-		
 		callLogButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				superframe.showCallLog();
@@ -281,7 +280,8 @@ public class KeypadPanel extends JPanel{
 		numberField.setText("");
 	}
 	
-	public void initiateCall(String number) {
+	public void initiateCall(String n) {
+		String number = superframe.uglifyNumber(n);
 		if(callButton.getText().equals(Constants.CALL_STRING)) {
 			monkey.unlock();
 			monkey.shell("am start -a android.intent.action.DIAL");
@@ -300,7 +300,7 @@ public class KeypadPanel extends JPanel{
 	
 	private void endCall() {
 		callButton.setText(Constants.CALL_STRING);
-		callButton.setBackground(Constants.BRAD_BLUE);
+		callButton.setBackground(Constants.GREEN);
 		numberField.setText("");
 		monkey.press("KEYCODE_ENDCALL");
 	}
@@ -350,7 +350,7 @@ public class KeypadPanel extends JPanel{
 	}
 	
 	public void refreshContactList() {
-		String searchTerm = numberField.getText();
+		String searchTerm = superframe.uglifyNumber(numberField.getText());
 		if (searchTerm.equals("")) {
 			initFavorites();
 			return;
@@ -408,7 +408,7 @@ public class KeypadPanel extends JPanel{
 		}
 	}
 	
-	private String getNumberbyName(String name) {
+	public String getNumberbyName(String name) {
 		String number = "";
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -441,5 +441,40 @@ public class KeypadPanel extends JPanel{
 			e1.printStackTrace();
 		}
 		return number;
+	}
+	
+	public String getNameByNumber(String number) {
+		String name = "";
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection connection = null;
+		    try {
+		      // create a database connection
+		      connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/contacts2.db");
+		      Statement statement = connection.createStatement();
+		      statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+		      ResultSet rs = statement.executeQuery("select * from contact_entities_view where data1 ='" + number + "' and mimetype = 'vnd.android.cursor.item/phone_v2'");
+		      name = rs.getString("display_name");
+		    }
+		    catch(SQLException e) {
+		      // if the error message is "out of memory", 
+		      // it probably means no database file is found
+		      System.err.println(e.getMessage());
+		    }
+		    finally {
+		      try {
+		        if(connection != null)
+		          connection.close();
+		      }
+		      catch(SQLException e) {
+		        // connection close failed.
+		        System.err.println(e);
+		      }
+		    }
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		return name;
 	}
 }

@@ -83,20 +83,16 @@ public class ContactPanel extends PanelSkeleton {
 		numberField.setFont(Constants.FONT_26_PLAIN);
 		favCheckbox.setFont(Constants.FONT_26_BOLD);
 		deleteButton.setFont(Constants.FONT_26_BOLD);
+		deleteButton.setBackground(Constants.RED);
 		saveButton.setFont(Constants.FONT_26_BOLD);
 		
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				newName = nameField.getText();
 				if(editContact) monkey.shell("am broadcast -a edu.segal.androidbradbox.deletecontact -e name '" + oldName + "'");
-				monkey.shell("am broadcast -a edu.segal.androidbradbox.addcontact -e name '" + newName + "' -e number '"+ numberField.getText() + "'");
-				System.out.println("attempting to copy contacts");
-				try {
-					Runtime.getRuntime().exec("/platform-tools/copycontacts.exe");
-				} catch (IOException e) {
-					System.out.println("Error: IOException when calling copycontacts.exe");
-					e.printStackTrace();
-				}
+				monkey.shell("am broadcast -a edu.segal.androidbradbox.addcontact -e name '" + newName + "' -e number '"+ superframe.uglifyNumber(numberField.getText()) + "'");
+				
+				superframe.runExecutable("/platform-tools/copycontacts.exe");
 				
 				if(fav) {
 					superframe.updateFavorite(nameField.getText(), Integer.toString(rank));

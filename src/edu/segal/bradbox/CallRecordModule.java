@@ -1,5 +1,6 @@
 package edu.segal.bradbox;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 public class CallRecordModule extends JPanel {
@@ -21,29 +23,26 @@ public class CallRecordModule extends JPanel {
 	JLabel numberLabel = new JLabel();
 	JLabel timeLabel = new JLabel();
 	JButton callButton = new JButton("Call");
+	JButton addContactButton = new JButton("Save as Contact");
 	
 	CallRecordModule (SuperFrame sf, String nm, String no, String t) {
 		superframe = sf;
-		setName(nm);
+		if(nm == null) {
+			nm = superframe.getKeypad().getNameByNumber(no);
+		} else {
+			setName(nm);
+		}
 		setNumber(no);
 		setTime(t);
 		
 		setLayout(new GridLayout(1, 0));
-		setPreferredSize(new Dimension(400, 40));
+		setPreferredSize(new Dimension(800, 60));
 		setBorder(new LineBorder(Constants.DARK_GRAY));
 		timeLabel.setFont(Constants.FONT_20_PLAIN);
-	
-		JPanel namePane = new JPanel();
-		namePane.setPreferredSize(new Dimension(140, 50));
-		namePane.setLayout(new BoxLayout(namePane, BoxLayout.Y_AXIS));
-		
+
 		nameLabel.setFont(Constants.FONT_20_BOLD);
 		numberLabel.setFont(Constants.FONT_20_PLAIN);
-		//namePane.add(nameLabel);
-		//namePane.add(numberLabel);
-		
-		callButton.setPreferredSize(new Dimension(140, 50));
-		
+
 		callButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				superframe.getKeypad().initiateCall(numberLabel.getText());
@@ -51,8 +50,27 @@ public class CallRecordModule extends JPanel {
 			}
 		});
 		
+		addContactButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				superframe.openEditContact(nameLabel.getText(), numberLabel.getText(), false, 1);
+			}
+		});
+		
+		callButton.setFont(Constants.FONT_20_BOLD);
+		callButton.setPreferredSize(new Dimension(180, 60));
+		
+		JPanel addContainer = new JPanel();
+		addContainer.setBorder(new EmptyBorder(0, 0, 0, 30));
+		addContactButton.setFont(Constants.FONT_20_BOLD);
+		addContactButton.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
 		add(timeLabel);
-		add(nameLabel);
+		if(nameLabel.getText().equals("")) {
+			addContainer.add(addContactButton);
+			add(addContainer);
+		} else {
+			add(nameLabel);
+		}
 		add(numberLabel);
 		add(callButton);
 	}
