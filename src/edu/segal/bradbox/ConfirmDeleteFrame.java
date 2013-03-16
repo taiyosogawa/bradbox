@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 
 public class ConfirmDeleteFrame extends JFrame{
 	JLabel messageLabel = new JLabel("Are you sure you want to delete this contact?");
@@ -31,8 +32,15 @@ public class ConfirmDeleteFrame extends JFrame{
 		rank = r;
 		monkey = superframe.getMonkey();
 		messageLabel.setText("Are you sure you want to delete " + name + "?");
+		messageLabel.setFont(Constants.FONT_14_PLAIN);
 		initWindow();
 		JPanel contentPanel = new JPanel();
+		
+		cancelButton.setFont(Constants.FONT_20_BOLD);
+		deleteButton.setFont(Constants.FONT_20_BOLD);
+		deleteButton.setBackground(Constants.RED);
+		
+		contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		contentPanel.setLayout(new GridLayout(0, 1));
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1, 0));

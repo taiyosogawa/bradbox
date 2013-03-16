@@ -42,6 +42,8 @@ public class CallRecordModule extends JPanel {
 
 		nameLabel.setFont(Constants.FONT_20_BOLD);
 		numberLabel.setFont(Constants.FONT_20_PLAIN);
+		
+		callButton.setBackground(Constants.GREEN);
 
 		callButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {

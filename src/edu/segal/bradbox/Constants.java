@@ -11,8 +11,8 @@ public interface Constants {
 	public static final String CALL_STRING = "Call";
 	public static final String END_CALL_STRING = "End Call";
 	
-	public static final Color GREEN = new Color(0x70, 0xe0, 0x4b);
-	public static final Color RED = new Color(0xdd, 0x3a, 0x3a);
+	public static final Color GREEN = new Color(0x59, 0xb7, 0x3a);
+	public static final Color RED = new Color(0xca, 0x27, 0x27);
 	public static final Color BACKGROUND_GRAY = new Color(0xd6, 0xd9, 0xdf);
 	public static final Color DARK_GRAY = new Color(0x44, 0x44, 0x44);
 	public static final Color BRAD_BLUE = new Color(0x49, 0x8c, 0x86);

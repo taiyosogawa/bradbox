@@ -226,7 +226,6 @@ public class SuperFrame extends JFrame{
 	}
 	
 	public String uglifyNumber(String number) {
-		System.out.println("uglified: " + number.replaceAll( "[^\\d]", "" ));
-		return number.replaceAll( "[^\\d]", "" );
+		return number.replaceAll( "[^\\d#*]", "" );
 	}
 }

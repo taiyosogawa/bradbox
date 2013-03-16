@@ -29,7 +29,19 @@ import javax.swing.event.DocumentListener;
 public class KeypadPanel extends JPanel{
 	SuperFrame superframe;
 	JavaMonkey monkey;
-	final static private String[] keypadLabels = {"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 1</font></b>\n<br>\n&nbsp;\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 2</font></b>\n<br>\nABC\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 3</font></b>\n<br>\nDEF\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 4</font></b>\n<br>\nGHI\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 5</font></b>\n<br>\nJKL\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 6</font></b>\n<br>\nMNO\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 7</font></b>\n<br>\nPQRS\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 8</font></b>\n<br>\nTUV\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 9</font></b>\n<br>\nWXYZ\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> *</font></b>\n<br>\n&nbsp;\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 0</font></b>\n<br>\n&nbsp;\n</p></html>", "<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> #</font></b>\n<br>\n&nbsp;\n</p></html>"};
+	final static private String[] keypadLabels = {
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 1</font></b>\n<br>\n&nbsp;\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 2</font></b>\n<br>\n<font size=\"6\">ABC</font>\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 3</font></b>\n<br>\n<font size=\"6\">DEF</font>\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 4</font></b>\n<br>\n<font size=\"6\">GHI</font>\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 5</font></b>\n<br>\n<font size=\"6\">JKL</font>\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 6</font></b>\n<br>\n<font size=\"6\">MNO</font>\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 7</font></b>\n<br>\n<font size=\"6\">PQRS</font>\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 8</font></b>\n<br>\n<font size=\"6\">TUV</font>\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 9</font></b>\n<br>\n<font size=\"6\">WXYZ</font>\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> *</font></b>\n<br>\n&nbsp;\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 0</font></b>\n<br>\n&nbsp;\n</p></html>", 
+		"<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> #</font></b>\n<br>\n&nbsp;\n</p></html>"};
 	final static private String[] numberStrings = {"", "", "[AaBbCc]", "[DdEeFf]", "[GgHhIi]", "[JjKkLl]", "[MmNnOo]", "[PpQqRrSs]", "[TtUuVv]", "[WwXxYyZz]"}; 
 	final static private Map<String, String> keyCodeMap = new HashMap<String, String>();
 	final static private Map<String, String> keyStringMap = new HashMap<String, String>();
@@ -86,14 +98,14 @@ public class KeypadPanel extends JPanel{
 		
 		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 0</font></b>\n<br>\n&nbsp;\n</p></html>", "0");
 		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 1</font></b>\n<br>\n&nbsp;\n</p></html>", "1");
-		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 2</font></b>\n<br>\nABC\n</p></html>", "2");
-		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 3</font></b>\n<br>\nDEF\n</p></html>", "3");
-		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 4</font></b>\n<br>\nGHI\n</p></html>", "4");
-		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 5</font></b>\n<br>\nJKL\n</p></html>", "5");
-		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 6</font></b>\n<br>\nMNO\n</p></html>", "6");
-		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 7</font></b>\n<br>\nPQRS\n</p></html>", "7");
-		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 8</font></b>\n<br>\nTUV\n</p></html>", "8");
-		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 9</font></b>\n<br>\nWXYZ\n</p></html>", "9");
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 2</font></b>\n<br>\n<font size=\"6\">ABC</font>\n</p></html>", "2");
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 3</font></b>\n<br>\n<font size=\"6\">DEF</font>\n</p></html>", "3");
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 4</font></b>\n<br>\n<font size=\"6\">GHI</font>\n</p></html>", "4");
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 5</font></b>\n<br>\n<font size=\"6\">JKL</font>\n</p></html>", "5");
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 6</font></b>\n<br>\n<font size=\"6\">MNO</font>\n</p></html>", "6");
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 7</font></b>\n<br>\n<font size=\"6\">PQRS</font>\n</p></html>", "7");
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 8</font></b>\n<br>\n<font size=\"6\">TUV</font>\n</p></html>", "8");
+		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> 9</font></b>\n<br>\n<font size=\"6\">WXYZ</font>\n</p></html>", "9");
 		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> *</font></b>\n<br>\n&nbsp;\n</p></html>", "*");
 		keyStringMap.put("<html>\n<p style=\"text-align: center;\">\n<b><font size=\"20\"> #</font></b>\n<br>\n&nbsp;\n</p></html>", "#");
 	}
@@ -145,6 +157,7 @@ public class KeypadPanel extends JPanel{
 		// Create backspace button
 		JButton delButton = new JButton("Backspace");
 		delButton.setPreferredSize(new Dimension(150, 80));
+		delButton.setBackground(Constants.RED);
 				
 		// Create a listener for the backspace button
 		delButton.addActionListener(new ActionListener() {
@@ -169,6 +182,7 @@ public class KeypadPanel extends JPanel{
 			JButton numberKey = new JButton(keypadLabels[i]);
 			//numberKey.setFont(constants.BIG_FONT);
 			numberKey.setSize(WIDTH, HEIGHT);
+			numberKey.setBackground(Constants.BRAD_BLUE);
 			numberKey.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					JButton clickedButton = (JButton) event.getSource();

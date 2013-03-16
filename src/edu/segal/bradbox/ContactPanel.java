@@ -1,25 +1,30 @@
 package edu.segal.bradbox;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
 
 public class ContactPanel extends PanelSkeleton {
 	private static final long serialVersionUID = 1L;
 	// Add contact fields
 	JCheckBox favCheckbox = new JCheckBox("Add as Favorite");
 	JLabel nameLabel = new JLabel("Full Name");
-	JTextField nameField = new JTextField(10);
+	JTextField nameField = new JTextField(15);
 	JLabel phoneNumberLabel = new JLabel("Phone Number");
-	JTextField numberField = new JTextField(10);
+	JTextField numberField = new JTextField(15);
 	JButton saveButton = new JButton("Save");
 	JButton deleteButton = new JButton("Delete");
 	String newName;
@@ -66,25 +71,45 @@ public class ContactPanel extends PanelSkeleton {
 		addContent(content);
 
 		content.setLayout(new GridLayout(0, 1));
+		content.setBorder(BorderFactory.createTitledBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(Constants.DARK_GRAY), 
+				BorderFactory.createEmptyBorder(15, 15, 15, 15))));
 		content.add(nameLabel);
 		content.add(nameField);
 		content.add(phoneNumberLabel);
 		content.add(numberField);
 		content.add(favCheckbox);
 		if(editContact) {
-			content.add(deleteButton);
-			content.add(saveButton);
+			JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
+			content.add(buttonPanel);
+			buttonPanel.add(deleteButton);
+			buttonPanel.add(saveButton);
+			saveButton.setPreferredSize(new Dimension(190, 67));
 		} else {
 			content.add(saveButton);
+			saveButton.setPreferredSize(new Dimension(400, 67));
 		}
+		
 		nameLabel.setFont(Constants.FONT_26_BOLD);
 		nameField.setFont(Constants.FONT_26_PLAIN);
+		
 		phoneNumberLabel.setFont(Constants.FONT_26_BOLD);
+		
 		numberField.setFont(Constants.FONT_26_PLAIN);
+		
 		favCheckbox.setFont(Constants.FONT_26_BOLD);
+		favCheckbox.setIcon(new ImageIcon(this.getClass().getResource("/img/empty_checkbox.png")));
+		favCheckbox.setRolloverIcon(new ImageIcon(this.getClass().getResource("/img/empty_checkbox.png")));
+		favCheckbox.setSelectedIcon(new ImageIcon(this.getClass().getResource("/img/checked_checkbox.png")));
+		favCheckbox.setPressedIcon(new ImageIcon(this.getClass().getResource("/img/checked_checkbox.png")));
+		favCheckbox.setRolloverSelectedIcon(new ImageIcon(this.getClass().getResource("/img/checked_checkbox.png")));
+		
+		
 		deleteButton.setFont(Constants.FONT_26_BOLD);
 		deleteButton.setBackground(Constants.RED);
+		
 		saveButton.setFont(Constants.FONT_26_BOLD);
+		saveButton.setBackground(Constants.BRAD_BLUE);
 		
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
