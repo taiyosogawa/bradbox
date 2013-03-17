@@ -1,3 +1,25 @@
+/*
+ * BradBox
+ * Copyright 2013 Taiyo Sogawa
+ * taiyo <at> u <dot> northwestern <dot> edu
+ * Last Revised: March 16, 2013
+ * 
+ * This file is part of BradBox.
+
+    BradBox is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    BradBox is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with BradBox.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package edu.segal.bradbox;
 
 import java.awt.GridLayout;
@@ -8,17 +30,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 public class EditFavoriteFrame extends JFrame{
+	private static final long serialVersionUID = 1L;
 	SuperFrame superframe;
 	String newName;
 	JPanel contentPanel = new JPanel();
