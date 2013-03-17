@@ -104,7 +104,6 @@ public class ContactPanel extends PanelSkeleton {
 		favCheckbox.setPressedIcon(new ImageIcon(this.getClass().getResource("/img/checked_checkbox.png")));
 		favCheckbox.setRolloverSelectedIcon(new ImageIcon(this.getClass().getResource("/img/checked_checkbox.png")));
 		
-		
 		deleteButton.setFont(Constants.FONT_26_BOLD);
 		deleteButton.setBackground(Constants.RED);
 		

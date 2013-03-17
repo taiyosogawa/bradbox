@@ -46,7 +46,6 @@ void loop() {
      digitalWrite(loudspeakerPin, LOW);
      digitalWrite(ledPin, LOW);
    }
-  
    // check for button press
    buttonState = digitalRead(buttonPin);                   // read the button state and store
    

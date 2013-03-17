@@ -22,10 +22,8 @@ public class Serialio implements SerialPortEventListener {
     private static final int SERIAL_TIMEOUT = 2000;
     // Serial baud rate. Do not change this.
     private static final int DATA_RATE = 9600;
-    // THIS WILL NEED TO BE CONFIGURED --- maybe have it send a signal to each COM until it gets a signal back
-    // COM10 for DynaVox (back USB port)
-    // COM4 for LEELA
-    private static final String SERIAL_PORT = "COM4";
+    // THIS WILL NEED TO BE CONFIGURED
+    private static final String SERIAL_PORT = "COM34";
     
     Serialio(BradBox bb) {
     	bradbox = bb;
@@ -119,7 +117,7 @@ public class Serialio implements SerialPortEventListener {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				String inputLine=input.readLine();
-				
+
 				if(inputLine.equals("short")){
 					System.out.println("Answering Call");
 					//monkey.press("KEYCODE_CALL");

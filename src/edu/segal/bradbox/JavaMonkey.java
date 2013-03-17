@@ -55,7 +55,9 @@ public class JavaMonkey {
     	mDevice.reboot(null);
     }
     
-    
+    public void installBradbox() {
+    	mDevice.installPackage("/platform-tools/android/Android-BradBox.apk");
+    }
     
     public void unlock() {
     	if ( mDevice == null ) {

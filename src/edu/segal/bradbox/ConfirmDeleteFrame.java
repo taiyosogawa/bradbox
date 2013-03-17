@@ -79,7 +79,7 @@ public class ConfirmDeleteFrame extends JFrame{
 		}
 		
 		setTitle("Edit Favorite");
-		setSize(300, 200);
+		setSize(400, 250);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
