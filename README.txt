@@ -1,44 +1,62 @@
-Install Java SE 7
-Place "platform-tools" in the root directory (make sure it is x86 version)
-platform-tools should include copycontacts.exe
-Make sure phone in USB debug mode (applications -> development -> debub mode)
-Install phone drivers
-put 32 bit rxtxSerial.dll in Windows>System32
-Factory reset if needed (dial *2767*3855#)
-Install Arduino driver (find in device manager, update drivers, have it search in the drivers folder)
+==========
+= README =
+==========
+Author: Taiyo Sogawa
+Last Revised: 3/17/2013
+
+=======================
+= System Requirements =
+=======================
+Device: Windows XP 32-bit Operating System
+
+1) Install Java SE 7 JRE
+	See:	<http://www.oracle.com/technetwork/java/javase/downloads/index.html>
+
+============================
+= Application Installation =
+============================
+
+1) Double click on Install_Brad_Box.exe
+	This should automatically:
+		Put the platform-tools directory in the root directory (Do not delete C:\platform-tools after installation!)
+		Put rxtxSerial.dll, sqlite3.def, sqlite3.dll, and sqlite3.exe in C:\WINDOWS\System32
+		Put an "Brad Box.exe" on the desktop
+	If anything fails, make sure these files are located in the appropriate directories. Manually copying the files might be necessary.
+
+========================
+= Arduino Installation =
+========================
+Device: Arduino Micro
+
+1) Install Driver for Arduino Micro 
+	Drivers are located in the setup/arduino-drivers directory 
+2) Change device port to COM34
+	Control Panel > System Properties > Device Manager
+	Find Arduino Micro under Ports
+	Right Click > Properties > Port Settings > Advanced
+	Change port number to COM34
 
 
+========================
+= Android Installation =
+========================
+Device: Unlocked Samsung Galaxy Pocket S5300
 
-Install sqlite3 (.dll and .exe into Windows/System32)
-sqlite3 favorites.db "create table names (name TEXT, rank INTEGER);"
-populate names with Favorite 1, Favorite 2, ... , Favorite 6.
-insert into names (name, rank) values ('Favorite 1', 1);
+1) Install phone drivers on computer (Directions vary by device.)
+	Drivers for Galaxy Pocket are in the setup/android-drivers directory
+2) Factory reset the phone if desired (Directions vary by device.)
+	On the Galaxy Pocket, Dial *2767*3855#
+3) Root the android phone (Directions vary by device.)
+4) Enable USB Debug Mode (Directions vary by device.)
+	On the Galaxy Pocket, Settings > Applications > Development > USB debugging 
+5) Install Android application
+	Connect phone to computer by USB
+	You can check the connection by opening CMD, navigating to C:\platform-tools and typing command "adb devices"
+	Double click install_new_android_application.exe in C:\platform-tools when phone connected
+	You will see the Brad Box logo on the phone screen on a successful install
 
-root the phone
-Make sure the function unlock() in JavaMonkey.java will unlock the phone
+============================
+= Additional Documentation =
+============================
 
-We will copy the contacts database every time, because there is a timeout for broadcast intent receivers
-
-every time a contact is edited {
-adb shell
-su (make sure the phone will accept)
-chmod 777 /data/data/com.android.providers.contacts/databases/contacts2.db
-adb pull /data/data/com.android.providers.contacts/databases/contacts2.db
-}
-
-do every time we query a contact {
-sqlite3 contacts2.db
-select data1 from contact_entities_view where (display_name like 'taiyo%' or data1 like '425%') and mimetype = 'vnd.android.cursor.item/phone_v2';
-select data1 from contact_entities_view where (display_name glob '*[TtUuVv][AaBbCc][GgHhIi]*') or data1 glob '*425*' and mimetype = 'vnd.android.cursor.item/phone_v2');
-}
-
-CAL LOG
-db stored at /data/data/com.sec.android.provider.logsprovider/databases/logs.db
-
-
-
-SMS
-db stored at data/data/com.android.providers.telephony/databases/mmssms.db
-
-ChimpChat Documentation at
 https://code.google.com/p/aster/source/browse/src/com/android/chimpchat/core/IChimpDevice.java?r=967f7f8cd6249c69e00c6de7ff1b55bd0f51d311
