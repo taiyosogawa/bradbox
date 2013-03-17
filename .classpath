@@ -7,8 +7,8 @@
 	<classpathentry kind="lib" path="C:/Users/Taiyo/Documents/Workspace/Eclipse/Bradbox/lib/guava-13.0.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Taiyo/Documents/Workspace/Eclipse/Bradbox/lib/monkeyrunner.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Taiyo/Documents/Workspace/Eclipse/Bradbox/lib/sdklib.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Taiyo/Documents/Workspace/Eclipse/Bradbox/lib/RXTXcomm.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Taiyo/Documents/Workspace/Eclipse/Bradbox/lib/JTattooDemo.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Taiyo/Documents/Workspace/Eclipse/Bradbox/lib/sqlite-jdbc-3.7.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Taiyo/Documents/Workspace/Eclipse/Bradbox/lib/RXTXcomm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

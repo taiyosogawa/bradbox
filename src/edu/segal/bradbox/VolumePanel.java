@@ -62,7 +62,7 @@ public class VolumePanel extends PanelSkeleton {
 		loudspeakerPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createLineBorder(Constants.DARK_GRAY), 
 				BorderFactory.createEmptyBorder(15, 15, 15, 15)), "Loudspeaker", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.ABOVE_TOP, Constants.FONT_18_PLAIN));
-		loudspeakerButton.setPreferredSize(new Dimension(400, 100));
+		loudspeakerButton.setPreferredSize(new Dimension(300, 60));
 		
 		
 		JPanel phonePanel = new JPanel(new GridLayout(2, 2));
@@ -70,7 +70,6 @@ public class VolumePanel extends PanelSkeleton {
 				BorderFactory.createLineBorder(Constants.DARK_GRAY), 
 				BorderFactory.createEmptyBorder(15, 15, 15, 15)), "Phone Ringer Volume", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.ABOVE_TOP, Constants.FONT_18_PLAIN));
 		
-		//JPanel volumePanel = new JPanel(new GridLayout(2, 2));
 		ImageIcon upIcon = new ImageIcon(this.getClass().getResource("/img/up_arrow.png"));
 		ImageIcon downIcon = new ImageIcon(this.getClass().getResource("/img/down_arrow.png"));
 		JButton upButton = new JButton(upIcon);
@@ -81,7 +80,7 @@ public class VolumePanel extends PanelSkeleton {
 		
 		content.add(loudspeakerPanel);
 			loudspeakerPanel.add(loudspeakerButton, BorderLayout.CENTER);
-		content.add(Box.createVerticalStrut(40));
+		content.add(Box.createVerticalStrut(30));
 		content.add(phonePanel);
 			phonePanel.add(upButton);
 			phonePanel.add(fullVolumeButton);

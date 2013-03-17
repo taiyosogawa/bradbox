@@ -47,7 +47,7 @@ public class PanelSkeleton extends JPanel {
 		
 		setLayout(new BorderLayout());
 		setBackground(Constants.BACKGROUND_GRAY);
-		setPreferredSize(new Dimension(900, 650));
+		setPreferredSize(new Dimension(700, 500));
 		
 		ImageIcon homeIcon = new ImageIcon(this.getClass().getResource("/img/bradbox_logo.png"));
 		homeButton = new JButton(homeIcon);

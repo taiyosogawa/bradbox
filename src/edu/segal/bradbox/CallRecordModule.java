@@ -60,7 +60,7 @@ public class CallRecordModule extends JPanel {
 	JLabel numberLabel = new JLabel();
 	JLabel timeLabel = new JLabel();
 	JButton callButton = new JButton("Call");
-	JButton addContactButton = new JButton("Save as Contact");
+	JButton addContactButton = new JButton("Save Contact");
 	
 	CallRecordModule (SuperFrame sf, String nm, String no, String t) {
 		superframe = sf;
@@ -73,12 +73,12 @@ public class CallRecordModule extends JPanel {
 		setTime(t);
 		
 		setLayout(new GridLayout(1, 0));
-		setPreferredSize(new Dimension(800, 60));
+		setPreferredSize(new Dimension(660, 60));
 		setBorder(new LineBorder(Constants.DARK_GRAY));
-		timeLabel.setFont(Constants.FONT_20_PLAIN);
+		timeLabel.setFont(Constants.FONT_16_PLAIN);
 
-		nameLabel.setFont(Constants.FONT_20_BOLD);
-		numberLabel.setFont(Constants.FONT_20_PLAIN);
+		nameLabel.setFont(Constants.FONT_16_BOLD);
+		numberLabel.setFont(Constants.FONT_16_PLAIN);
 		
 		callButton.setBackground(Constants.GREEN);
 
@@ -95,12 +95,12 @@ public class CallRecordModule extends JPanel {
 			}
 		});
 		
-		callButton.setFont(Constants.FONT_20_BOLD);
+		callButton.setFont(Constants.FONT_18_BOLD);
 		callButton.setPreferredSize(new Dimension(180, 60));
 		
 		JPanel addContainer = new JPanel();
 		addContainer.setBorder(new EmptyBorder(0, 0, 0, 30));
-		addContactButton.setFont(Constants.FONT_20_BOLD);
+		addContactButton.setFont(Constants.FONT_18_BOLD);
 		addContactButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		add(timeLabel);

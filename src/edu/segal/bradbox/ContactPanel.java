@@ -102,30 +102,30 @@ public class ContactPanel extends PanelSkeleton {
 			content.add(buttonPanel);
 			buttonPanel.add(deleteButton);
 			buttonPanel.add(saveButton);
-			saveButton.setPreferredSize(new Dimension(190, 67));
+			saveButton.setPreferredSize(new Dimension(157, 53));
 		} else {
 			content.add(saveButton);
-			saveButton.setPreferredSize(new Dimension(400, 67));
+			saveButton.setPreferredSize(new Dimension(332, 53));
 		}
 		
-		nameLabel.setFont(Constants.FONT_26_BOLD);
-		nameField.setFont(Constants.FONT_26_PLAIN);
+		nameLabel.setFont(Constants.FONT_24_BOLD);
+		nameField.setFont(Constants.FONT_24_PLAIN);
 		
-		phoneNumberLabel.setFont(Constants.FONT_26_BOLD);
+		phoneNumberLabel.setFont(Constants.FONT_24_BOLD);
 		
-		numberField.setFont(Constants.FONT_26_PLAIN);
+		numberField.setFont(Constants.FONT_24_PLAIN);
 		
-		favCheckbox.setFont(Constants.FONT_26_BOLD);
+		favCheckbox.setFont(Constants.FONT_24_BOLD);
 		favCheckbox.setIcon(new ImageIcon(this.getClass().getResource("/img/empty_checkbox.png")));
 		favCheckbox.setRolloverIcon(new ImageIcon(this.getClass().getResource("/img/empty_checkbox.png")));
 		favCheckbox.setSelectedIcon(new ImageIcon(this.getClass().getResource("/img/checked_checkbox.png")));
 		favCheckbox.setPressedIcon(new ImageIcon(this.getClass().getResource("/img/checked_checkbox.png")));
 		favCheckbox.setRolloverSelectedIcon(new ImageIcon(this.getClass().getResource("/img/checked_checkbox.png")));
 		
-		deleteButton.setFont(Constants.FONT_26_BOLD);
+		deleteButton.setFont(Constants.FONT_24_BOLD);
 		deleteButton.setBackground(Constants.RED);
 		
-		saveButton.setFont(Constants.FONT_26_BOLD);
+		saveButton.setFont(Constants.FONT_24_BOLD);
 		saveButton.setBackground(Constants.BRAD_BLUE);
 		
 		saveButton.addActionListener(new ActionListener() {

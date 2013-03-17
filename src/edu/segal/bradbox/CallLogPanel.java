@@ -54,9 +54,8 @@ public class CallLogPanel extends PanelSkeleton {
 		      connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/logs.db");
 		      Statement statement = connection.createStatement();
 		      statement.setQueryTimeout(30);  // set timeout to 30 sec. 
-		      ResultSet rs = statement.executeQuery("select * from logs order by _id desc limit 8");
+		      ResultSet rs = statement.executeQuery("select * from logs order by _id desc limit 6");
 		      // put a for loop here that iterates for each search result panel available
-		      //for(int i = 0; i < 8; i++) {
 			      while (rs.next()) {  
 			          // read the result set
 			    	  java.util.Date callTime = new java.util.Date((long)Long.parseLong(rs.getString("date")));

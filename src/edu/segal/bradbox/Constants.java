@@ -26,9 +26,9 @@ import java.awt.Color;
 import java.awt.Font;
 
 public interface Constants {
-	public static final int WINDOW_WIDTH = 600;
-	public static final int WINDOW_HEIGHT = 600;
-	public static final int CONTACTS_WIDTH = 190;
+	public static final int WINDOW_WIDTH = 700;
+	public static final int WINDOW_HEIGHT = 500;
+	public static final int CONTACTS_WIDTH = 135;
 	
 	public static final String CALL_STRING = "Call";
 	public static final String END_CALL_STRING = "End Call";
@@ -40,11 +40,17 @@ public interface Constants {
 	public static final Color BRAD_BLUE = new Color(0x49, 0x8c, 0x86);
 	
 	public static final Font FONT_40_BOLD = new Font("SansSerif", Font.BOLD, 40);
+	public static final Font FONT_28_BOLD = new Font("SansSerif", Font.BOLD, 28);
 	public static final Font FONT_26_BOLD = new Font("SansSerif", Font.BOLD, 26);
+	public static final Font FONT_24_BOLD = new Font("SansSerif", Font.BOLD, 24);
 	public static final Font FONT_20_BOLD = new Font("SansSerif", Font.BOLD, 20);
+	public static final Font FONT_18_BOLD = new Font("SansSerif", Font.BOLD, 18);
+	public static final Font FONT_16_BOLD = new Font("SansSerif", Font.BOLD, 16);
 	public static final Font FONT_26_PLAIN = new Font("SansSerif", Font.PLAIN, 26);
+	public static final Font FONT_24_PLAIN = new Font("SansSerif", Font.PLAIN, 24);
 	public static final Font FONT_20_PLAIN = new Font("SansSerif", Font.PLAIN, 20);
 	public static final Font FONT_18_PLAIN = new Font("SansSerif", Font.PLAIN, 18);
+	public static final Font FONT_16_PLAIN = new Font("SansSerif", Font.PLAIN, 16);
 	public static final Font FONT_14_PLAIN = new Font("SansSerif", Font.PLAIN, 14);
 	public static final Font FONT_12_PLAIN = new Font("SansSerif", Font.PLAIN, 12);
 }

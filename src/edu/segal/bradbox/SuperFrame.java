@@ -24,6 +24,7 @@ package edu.segal.bradbox;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Point;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -58,7 +59,7 @@ public class SuperFrame extends JFrame{
 	    initWindow();
 
 		
-		setSize(950, 550);
+		setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		BorderLayout layout = new BorderLayout();
 		layout.setVgap(0);
 		setLayout(layout);
@@ -76,6 +77,7 @@ public class SuperFrame extends JFrame{
 		hidePanels();
 		showKeypad();
 		pack();
+		this.setLocation(new Point(10, 10));
 	}
 	
 	public final void openEditContact(String nm, String no, boolean fav, int r) {

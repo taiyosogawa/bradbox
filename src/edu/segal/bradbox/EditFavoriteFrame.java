@@ -64,7 +64,7 @@ public class EditFavoriteFrame extends JFrame{
 			  connection = DriverManager.getConnection("jdbc:sqlite:/platform-tools/favorites.db");
 			  Statement statement = connection.createStatement();
 			  statement.setQueryTimeout(30);  // set timeout to 30 sec.
-			  ResultSet rs = statement.executeQuery("select * from names order by rank");
+			  ResultSet rs = statement.executeQuery("select * from names order by rank limit 5");
 			  // put a for loop here that iterates for each search result panel available
 			      while (rs.next()) {  
 			    	  FavoriteButton favButton = new FavoriteButton(rs.getString("name"), rs.getString("rank"));
@@ -111,7 +111,7 @@ public class EditFavoriteFrame extends JFrame{
 		}
 		
 		setTitle("Edit Favorite");
-		setSize(400, 600);
+		setSize(400, 500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}

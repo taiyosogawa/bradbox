@@ -29,6 +29,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class ContactModule extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -55,11 +56,12 @@ public class ContactModule extends JPanel {
 		smsButton.setFont(Constants.FONT_18_PLAIN);
 		editButton.setFont(Constants.FONT_18_PLAIN);
 		
-		callButton.setPreferredSize(new Dimension(140, 50));
-		editButton.setPreferredSize(new Dimension(80, 50));
+		callButton.setPreferredSize(new Dimension(110, 50));
+		editButton.setPreferredSize(new Dimension(60, 50));
+		setBorder(new EmptyBorder(0, 0, 0, 0));
 		
 		JPanel namePane = new JPanel();
-		namePane.setPreferredSize(new Dimension(110, 50));
+		namePane.setPreferredSize(new Dimension(Constants.CONTACTS_WIDTH, 50));
 		namePane.setLayout(new BoxLayout(namePane, BoxLayout.Y_AXIS));
 		JPanel buttonPane = new JPanel();
 
