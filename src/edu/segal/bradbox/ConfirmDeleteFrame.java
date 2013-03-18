@@ -85,6 +85,7 @@ public class ConfirmDeleteFrame extends JFrame{
 				if(fav) {
 					superframe.updateFavorite("Favorite " + Integer.toString(rank), Integer.toString(rank));
 				}
+				superframe.showKeypad();
 				frame.dispose();
 			}
 		});
