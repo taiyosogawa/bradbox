@@ -134,7 +134,7 @@ public class ContactPanel extends PanelSkeleton {
 				if(editContact) monkey.shell("am broadcast -a edu.segal.androidbradbox.deletecontact -e name '" + oldName + "'");
 				monkey.shell("am broadcast -a edu.segal.androidbradbox.addcontact -e name '" + newName + "' -e number '"+ superframe.uglifyNumber(numberField.getText()) + "'");
 				
-				superframe.runExecutable("/platform-tools/copycontacts.exe");
+				superframe.runExecutable("copycontacts.exe");
 				
 				if(fav) {
 					superframe.updateFavorite(nameField.getText(), Integer.toString(rank));

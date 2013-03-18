@@ -44,7 +44,7 @@ public class CallLogPanel extends PanelSkeleton {
 	}
 	
 	public void updateCallLog() {
-		superframe.runExecutable("/platform-tools/copycalllog.exe");
+		superframe.runExecutable("copycalllog.exe");
 		content.removeAll();
 		try {
 			Class.forName("org.sqlite.JDBC");

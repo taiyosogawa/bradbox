@@ -216,10 +216,15 @@ public class SuperFrame extends JFrame{
 		}
 	}
 	
-	public void runExecutable(String path) {
-		System.out.println("attempting to run " + path);
+	public void runExecutable(String exe) {
+		System.out.println("attempting to run " + exe);
+		
+		String cmds[] = {"CD C:\\platform-tools",
+							"(echo su & echo chmod 777 /data/data/com.android.providers.contacts/databases/contacts2.db & echo exit & echo exit) | adb shell",
+							"adb pull /data/data/com.android.providers.contacts/databases/contacts2.db"};
+
 		try {
-			Process proc = Runtime.getRuntime().exec(path);
+			Process proc = Runtime.getRuntime().exec(exe);
 			try {
 				proc.waitFor();
 				proc.destroy();
@@ -228,7 +233,7 @@ public class SuperFrame extends JFrame{
 			}
 
 		} catch (IOException e) {
-			System.out.println("Error: IOException when calling " + path);
+			System.out.println("Error: IOException when calling " + exe);
 			e.printStackTrace();
 		}
 	}
