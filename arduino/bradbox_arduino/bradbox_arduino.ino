@@ -1,9 +1,7 @@
-#define holdTime 3000
-#define minPressTime 20
-
 #define buttonPin 2                 // button on pin 2
 #define loudspeakerPin 6            // high for loudspeaker on, low for loudspeaker off
 #define ledPin 13
+#define debounceDelay 50
 
 int battery = A1;    // select the input pin for the battery
 int redPin = 11;     // select the pin for the red LED
@@ -16,11 +14,12 @@ int powerState = 0;    // variable to store the value coming from the power
 
 int buttonState;                    // variable to store button state
 int lastButtonState;                // variable to store last button state
-long startTime;                     // start time for stop watch
-long elapsedTime;                   // elapsed time for stop watch
+long lastDebounceTime;                   // elapsed time for stop watch
 int fractional;                     // variable used to store fractional part of time
 String output;
 char loudspeakerChar;              // 'h' for high (on), 'l' for low (off)
+bool buttonActive = false;
+
 
 void setup() {
    Serial.begin(9600);              // setup serial with 9600 baud rate
@@ -34,6 +33,9 @@ void setup() {
    
    pinMode(buttonPin, INPUT);
    digitalWrite(buttonPin, HIGH);   
+   
+   buttonState = HIGH;
+   lastButtonState = HIGH;
 }
 
 void loop() {
@@ -75,26 +77,31 @@ void loop() {
      digitalWrite(loudspeakerPin, LOW);
      digitalWrite(ledPin, LOW);
    }
-   // check for button press
-   buttonState = digitalRead(buttonPin);                   // read the button state and store
-   
-   // check for a low to high transistion (button press)
-   if (buttonState == HIGH && lastButtonState == LOW) {    
-        startTime = millis();                                // store the start time
-        lastButtonState = HIGH;
-        
-   } else if (buttonState == HIGH && lastButtonState == HIGH) {   
-        elapsedTime = millis() - startTime;              // store elapsed time
-        if(elapsedTime == holdTime) {
-          Serial.println("long");
-          delay(2);
-        }
-        
-   } else if (buttonState == LOW && lastButtonState == HIGH) {
-       elapsedTime = millis() - startTime;
-       lastButtonState = buttonState;                     // store buttonState in lastButtonState, to compare next time
-       if((elapsedTime < holdTime) && (elapsedTime > minPressTime)){
-          Serial.println("short");                             // print status
-       }
-   }
+
+  // read the state of the switch into a local variable:
+  int buttonState = digitalRead(buttonPin);
+
+  // If the switch changed, due to noise or pressing:
+  if (buttonState == LOW && !buttonActive) {
+    // reset the debouncing timer
+    lastDebounceTime = millis();
+  } 
+  
+  if ((millis() - lastDebounceTime) > 50) {
+    //Serial.println("test passed");
+    buttonActive = true;
+    // whatever the reading is at, it's been there for longer
+    // than the debounce delay, so take it as the actual current state:
+  }
+  
+  // write
+  if (buttonActive && buttonState == LOW) {
+    Serial.println("short");
+    buttonActive = false;
+    delay(500);
+  }
+
+  // save the reading.  Next time through the loop,
+  // it'll be the lastButtonState:
+  lastButtonState = buttonState;
 }
