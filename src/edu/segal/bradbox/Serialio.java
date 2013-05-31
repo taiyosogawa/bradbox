@@ -111,7 +111,7 @@ public class Serialio implements SerialPortEventListener {
     public void turnHigh() {
     	while(true)
 			try {
-				System.out.println("Printing high, bitches");
+				System.out.println("Printing high");
 				output.write('h');
 			} catch (IOException e) {
 				System.out.println("Error: could not write high");
@@ -140,12 +140,10 @@ public class Serialio implements SerialPortEventListener {
 
 				if(inputLine.equals("short")){
 					System.out.println("Answering Call");
-					//monkey.press("KEYCODE_CALL");
 					bradbox.gui.keypadPanel.acceptButtonPush();
 				}
 				if(inputLine.equals("long")){
-					System.out.println("Restarting Device");
-					monkey.reboot();
+					bradbox.startBradTrack();
 				}
 			} catch (Exception e) {
 				System.err.println(e.toString());

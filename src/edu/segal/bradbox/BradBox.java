@@ -21,12 +21,16 @@
 
 package edu.segal.bradbox;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import javax.swing.SwingUtilities;
 
 public class BradBox{
 	final JavaMonkey monkey = new JavaMonkey();
 	Serialio serialio = new Serialio(this);
 	public SuperFrame gui;
+	public Process bradtrack = null;
 	
 	public void startKeypad() {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -35,6 +39,19 @@ public class BradBox{
                 gui.setVisible(true);
             }
 		});
+	}
+	
+	public void startBradTrack() {
+		System.out.println("Starting BradTrack");
+		try {
+			if(bradtrack != null) {
+				bradtrack.destroy();
+			}
+			Runtime rt = Runtime.getRuntime();
+			bradtrack = rt.exec("c:\\platform-tools\\bradtrack\\python c:\\platform-tools\\bradtrack\\bradtrack.py");
+		}
+		catch(Exception e) {
+		}
 	}
 
 	public static void main(String[] args) {

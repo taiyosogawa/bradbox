@@ -169,7 +169,7 @@ public class KeypadPanel extends JPanel{
 
 		// Create a listener for the backspace button
 		delButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
+			public void actionPerformed(ActionEvent event) {	
 				monkey.press("KEYCODE_DEL");	
 				String number = superframe.uglifyNumber(numberField.getText());
 				if(number.length() > 0) {
